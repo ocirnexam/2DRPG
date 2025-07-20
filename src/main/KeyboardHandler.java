@@ -7,6 +7,10 @@ public class KeyboardHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed;
 
+    public boolean isAnyMoveKeyPressed() {
+        return upPressed || downPressed || leftPressed || rightPressed;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
         

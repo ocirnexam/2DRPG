@@ -7,7 +7,7 @@ public abstract class Entity {
     private int speed;
 
     public BufferedImage down1, down2;
-    public BufferedImage images[];
+    public BufferedImage[] images;
 
     public int spriteCounter = 0;
     public int spriteNum = 0;

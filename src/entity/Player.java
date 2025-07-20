@@ -44,24 +44,26 @@ public class Player extends Entity {
     }
 
     public void update() {
-         if (keyboardHandler.upPressed) {
-            this.move(UP);
-         } 
-         else if (keyboardHandler.downPressed) {
-            this.move(DOWN);
-         }
-         else if (keyboardHandler.leftPressed) {
-            this.move(LEFT);
-         }
-         else if (keyboardHandler.rightPressed) {
-            this.move(RIGHT);
-         }
-         spriteCounter++;
-         if (spriteCounter > 12) {
-            spriteNum++;
-            spriteNum %= 2;
-            spriteCounter = 0;
-         }
+        if (keyboardHandler.isAnyMoveKeyPressed()) {
+            if (keyboardHandler.upPressed) {
+                this.move(UP);
+            } 
+            else if (keyboardHandler.downPressed) {
+                this.move(DOWN);
+            }
+            else if (keyboardHandler.leftPressed) {
+                this.move(LEFT);
+            }
+            else if (keyboardHandler.rightPressed) {
+                this.move(RIGHT);
+            }
+            spriteCounter++;
+            if (spriteCounter > 12) {
+                spriteNum++;
+                spriteNum %= 2;
+                spriteCounter = 0;
+            }
+        }
     }
 
     public void draw(Graphics2D graphics2D) {
