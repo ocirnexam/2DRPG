@@ -7,13 +7,12 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
-import entity.Entity.Direction;
 import entity.Player;
 
 public class GamePanel extends JPanel implements Runnable {
     // SCREEN SETTINGS
     final int originalTileSize = 16; // 16x16 P Tile
-    final int scale = 3; // scale to higher resolution screens
+    final int scale = 4; // scale to higher resolution screens
 
     final int tileSize = originalTileSize * scale;
     final int maxScreenCol = 16;

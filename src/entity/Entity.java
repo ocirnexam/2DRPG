@@ -7,18 +7,17 @@ public abstract class Entity {
     private int speed;
 
     public BufferedImage down1, down2;
+    public BufferedImage images[];
 
     public int spriteCounter = 0;
-    public int spriteNum = 1;
+    public int spriteNum = 0;
 
-    public enum Direction {
-        LEFT,
-        RIGHT,
-        UP,
-        DOWN
-    }
+    public final int DOWN = 0;
+    public final int UP = 2; 
+    public final int RIGHT = 4;
+    public final int LEFT = 6;
 
-    Direction direction;
+    protected int direction;
 
     public void setX(int x) {
         this.x = x;
@@ -45,7 +44,7 @@ public abstract class Entity {
         return this.speed;
     }
 
-    public void move(Direction direction) {
+    public void move(int direction) {
         switch (direction) {
             case UP:
                 setY(getY() - getSpeed());

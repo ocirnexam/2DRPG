@@ -24,13 +24,20 @@ public class Player extends Entity {
         setX(100);
         setY(100);
         setSpeed(4);
-        direction = Direction.DOWN;
+        direction = DOWN;
     }
 
     private void getPlayerImage() {
+        images = new BufferedImage[8];
         try {
-            down1 = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Front1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Front2.png"));
+            images[0] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Front1.png"));
+            images[1] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Front2.png"));
+            images[2] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Back1.png"));
+            images[3] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Back2.png"));
+            images[4] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Right1.png"));
+            images[5] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Right2.png"));
+            images[6] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Left1.png"));
+            images[7] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Left2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -38,25 +45,21 @@ public class Player extends Entity {
 
     public void update() {
          if (keyboardHandler.upPressed) {
-            this.move(Direction.UP);
+            this.move(UP);
          } 
          else if (keyboardHandler.downPressed) {
-            this.move(Direction.DOWN);
+            this.move(DOWN);
          }
          else if (keyboardHandler.leftPressed) {
-            this.move(Direction.LEFT);
+            this.move(LEFT);
          }
          else if (keyboardHandler.rightPressed) {
-            this.move(Direction.RIGHT);
+            this.move(RIGHT);
          }
          spriteCounter++;
          if (spriteCounter > 12) {
-            if (spriteNum == 1) {
-                spriteNum = 2;
-            }
-            else {
-                spriteNum = 1;
-            }
+            spriteNum++;
+            spriteNum %= 2;
             spriteCounter = 0;
          }
     }
@@ -64,22 +67,7 @@ public class Player extends Entity {
     public void draw(Graphics2D graphics2D) {
         BufferedImage image = null;
 
-        switch (direction) {
-            case Direction.DOWN:
-            case Direction.UP:
-            case Direction.LEFT:
-            case Direction.RIGHT:
-            if (spriteNum == 1) {
-                image = down1;
-            }
-            if (spriteNum == 2) {
-                image = down2;
-            }
-                break;
-        
-            default:
-                break;
-        }
+        image = images[direction + spriteNum];
 
         graphics2D.drawImage(image, getX(), getY(), gamePanel.getTileSize(), gamePanel.getTileSize(), null);
     }
