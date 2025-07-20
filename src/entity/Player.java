@@ -13,16 +13,23 @@ public class Player extends Entity {
     GamePanel gamePanel;
     KeyboardHandler keyboardHandler;
 
+    public final int screenX;
+    public final int screenY;
+
     public Player (GamePanel gamePanel, KeyboardHandler keyboardHandler) {
         this.gamePanel = gamePanel;
         this.keyboardHandler = keyboardHandler;
+
+        screenX = gamePanel.screenWidth / 2 - (gamePanel.getTileSize() / 2);
+        screenY = gamePanel.screenHeight / 2 - (gamePanel.getTileSize() / 2);
+
         this.setDefaultValues();
         this.getPlayerImage();
     }
 
     private void setDefaultValues() {
-        setX(400);
-        setY(100);
+        setWorldX(19 * gamePanel.getTileSize());
+        setWorldY(2 * gamePanel.getTileSize());
         setSpeed(4);
         direction = DOWN;
     }
@@ -71,6 +78,6 @@ public class Player extends Entity {
 
         image = images[direction + spriteNum];
 
-        graphics2D.drawImage(image, getX(), getY(), gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+        graphics2D.drawImage(image, screenX, screenY, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
     }
 }

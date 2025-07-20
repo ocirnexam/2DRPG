@@ -3,7 +3,7 @@ package entity;
 import java.awt.image.BufferedImage;
 
 public abstract class Entity {
-    private int x, y;
+    private int worldX, worldY;
     private int speed;
 
     public BufferedImage down1, down2;
@@ -19,12 +19,12 @@ public abstract class Entity {
 
     protected int direction;
 
-    public void setX(int x) {
-        this.x = x;
+    public void setWorldX(int x) {
+        this.worldX = x;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setWorldY(int y) {
+        this.worldY = y;
     }
 
     public void setSpeed(int speed)
@@ -32,12 +32,12 @@ public abstract class Entity {
         this.speed = speed;
     }
 
-    public int getX() {
-        return this.x;
+    public int getWorldX() {
+        return this.worldX;
     }
 
-    public int getY() {
-        return this.y;
+    public int getWorldY() {
+        return this.worldY;
     }
 
     public int getSpeed() {
@@ -47,16 +47,16 @@ public abstract class Entity {
     public void move(int direction) {
         switch (direction) {
             case UP:
-                setY(getY() - getSpeed());
+                setWorldY(getWorldY() - getSpeed());
                 break;
             case DOWN:
-                setY(getY() + getSpeed());
+                setWorldY(getWorldY() + getSpeed());
                 break;
             case LEFT:
-                setX(getX() - getSpeed());
+                setWorldX(getWorldX() - getSpeed());
                 break;
             case RIGHT:
-                setX(getX() + getSpeed());
+                setWorldX(getWorldX() + getSpeed());
                 break;
         
             default:
