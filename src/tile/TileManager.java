@@ -59,6 +59,14 @@ public class TileManager {
         }
     }
 
+    public int[][] getMapTileNum() {
+        return mapTileNum;
+    }
+
+    public Tile[] getTiles() {
+        return tiles;
+    }
+
     public void draw(Graphics2D graphics2D) {
         for (int col = 0; col < gamePanel.maxWorldCol; col++) {
             for (int row = 0; row < gamePanel.maxWorldRow; row++) {

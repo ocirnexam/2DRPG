@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public abstract class Entity {
@@ -12,10 +13,14 @@ public abstract class Entity {
     public int spriteCounter = 0;
     public int spriteNum = 0;
 
-    public final int DOWN = 0;
-    public final int UP = 2; 
-    public final int RIGHT = 4;
-    public final int LEFT = 6;
+    // Collsision details
+    public Rectangle solidArea;
+    public boolean collisionOn = false;
+
+    public static final int DOWN = 0;
+    public static final int UP = 2; 
+    public static final int RIGHT = 4;
+    public static final int LEFT = 6;
 
     protected int direction;
 
@@ -42,6 +47,10 @@ public abstract class Entity {
 
     public int getSpeed() {
         return this.speed;
+    }
+
+    public int getDirection() {
+        return direction;
     }
 
     public void move(int direction) {

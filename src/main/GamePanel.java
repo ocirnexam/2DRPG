@@ -28,10 +28,11 @@ public class GamePanel extends JPanel implements Runnable {
     public final Player player = new Player(this, keyboardHandler);
 
     TileManager tileManager = new TileManager(this);
+    CollisionDetector collisionDetector = new CollisionDetector(this);
 
     // World Settings
-    public final int maxWorldCol = 92;
-    public final int maxWorldRow = 53;
+    public final int maxWorldCol = 105;
+    public final int maxWorldRow = 66;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
@@ -49,6 +50,10 @@ public class GamePanel extends JPanel implements Runnable {
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
+    }
+
+    public CollisionDetector getCollisionDetector() {
+        return collisionDetector;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -23,13 +24,15 @@ public class Player extends Entity {
         screenX = gamePanel.screenWidth / 2 - (gamePanel.getTileSize() / 2);
         screenY = gamePanel.screenHeight / 2 - (gamePanel.getTileSize() / 2);
 
+        solidArea = new Rectangle(16, 28, 32, 32);
+
         this.setDefaultValues();
         this.getPlayerImage();
     }
 
     private void setDefaultValues() {
-        setWorldX(19 * gamePanel.getTileSize());
-        setWorldY(2 * gamePanel.getTileSize());
+        setWorldX(24 * gamePanel.getTileSize());
+        setWorldY(12 * gamePanel.getTileSize());
         setSpeed(4);
         direction = DOWN;
     }
@@ -50,6 +53,17 @@ public class Player extends Entity {
         }
     }
 
+    @Override
+    public void move(int direction) {
+        collisionOn = false;
+        this.direction = direction;
+        gamePanel.getCollisionDetector().checkTile(this);
+
+        if (collisionOn == false) {
+            super.move(direction);
+        }
+    }
+
     public void update() {
         if (keyboardHandler.isAnyMoveKeyPressed()) {
             if (keyboardHandler.upPressed) {
@@ -64,6 +78,7 @@ public class Player extends Entity {
             else if (keyboardHandler.rightPressed) {
                 this.move(RIGHT);
             }
+
             spriteCounter++;
             if (spriteCounter > 12) {
                 spriteNum++;
