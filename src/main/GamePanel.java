@@ -28,7 +28,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final Player player = new Player(this, keyboardHandler);
 
     TileManager tileManager = new TileManager(this);
-    CollisionDetector collisionDetector = new CollisionDetector(this);
+    CollisionManager collisionDetector = new CollisionManager(this);
+    InteractiveObjectManager interactiveObjectManager = new InteractiveObjectManager(this);
 
     // World Settings
     public final int maxWorldCol = 105;
@@ -52,7 +53,11 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread.start();
     }
 
-    public CollisionDetector getCollisionDetector() {
+    public void gameSetup() {
+        interactiveObjectManager.placeInteractiveObjects();
+    }
+
+    public CollisionManager getCollisionManager() {
         return collisionDetector;
     }
 
@@ -82,7 +87,7 @@ public class GamePanel extends JPanel implements Runnable {
                 drawCount++;
             }
             if (timer >= secondInNanoSeconds) {
-                System.out.println("FPS:" + drawCount);
+                System.out.println("FPS:" + drawCount + ", PlayerX: " + player.getWorldX() + ", PlayerY: " + player.getWorldY());
                 drawCount = 0;
                 timer = 0;
             }
@@ -97,6 +102,7 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(graphics);
         Graphics2D graphics2D = (Graphics2D) graphics;
         tileManager.draw(graphics2D);
+        interactiveObjectManager.draw(graphics2D);
         player.draw(graphics2D);
     }
 

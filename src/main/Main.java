@@ -13,6 +13,7 @@ public class Main {
         window.add(gamePanel);
         window.pack();
 
+        gamePanel.gameSetup();
         gamePanel.startGameThread();
         
         window.setLocationRelativeTo(null);

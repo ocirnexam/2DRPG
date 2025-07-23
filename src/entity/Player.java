@@ -13,6 +13,7 @@ import main.KeyboardHandler;
 public class Player extends Entity {
     GamePanel gamePanel;
     KeyboardHandler keyboardHandler;
+    boolean hasKey = false;
 
     public final int screenX;
     public final int screenY;
@@ -37,6 +38,18 @@ public class Player extends Entity {
         direction = DOWN;
     }
 
+    public void addKey() {
+        this.hasKey = true;
+    }
+
+    public void dropKey() {
+        this.hasKey = false;
+    }
+
+    public boolean hasKey() {
+        return this.hasKey;
+    }
+ 
     private void getPlayerImage() {
         images = new BufferedImage[8];
         try {
@@ -57,7 +70,7 @@ public class Player extends Entity {
     public void move(int direction) {
         collisionOn = false;
         this.direction = direction;
-        gamePanel.getCollisionDetector().checkTile(this);
+        gamePanel.getCollisionManager().checkCollision(this);
 
         if (collisionOn == false) {
             super.move(direction);
