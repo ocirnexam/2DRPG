@@ -7,7 +7,7 @@ import javax.imageio.ImageIO;
 public class OpenDoor extends InteractiveObject {
 
     public OpenDoor() {
-        setName("door");
+        setName("open_door");
         setCollision(false);
         this.loadImage();
     }

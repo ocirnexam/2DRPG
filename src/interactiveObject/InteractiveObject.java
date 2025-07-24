@@ -10,8 +10,8 @@ public class InteractiveObject {
     private BufferedImage image;
     private String name;
     private boolean collision;
-    private int worldX;
-    private int worldY;
+    private int worldX = 0;
+    private int worldY = 0;
     protected final Rectangle solidArea = new Rectangle(0, 0, 48, 48);
 
     public InteractiveObject() {
@@ -42,6 +42,11 @@ public class InteractiveObject {
         return solidArea;
     }
 
+    public void setBoundaries() {
+        this.solidArea.x = this.worldX;
+        this.solidArea.y = this.worldY;
+    }
+
     public void setImage(BufferedImage image) {
         this.image = image;
     }
@@ -56,10 +61,12 @@ public class InteractiveObject {
     }
 
     public void setWorldX(int worldX) {
+        this.solidArea.x = this.worldX;
         this.worldX = worldX;
     }
 
     public void setWorldY(int worldY) {
+        this.solidArea.y = this.worldY;
         this.worldY = worldY;
     }
     

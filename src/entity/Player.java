@@ -7,13 +7,15 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import interactiveObject.InteractiveObject;
 import main.GamePanel;
+import main.InteractiveObjectManager;
 import main.KeyboardHandler;
 
 public class Player extends Entity {
     GamePanel gamePanel;
     KeyboardHandler keyboardHandler;
-    boolean hasKey = false;
+    int storedKeys = 0;
 
     public final int screenX;
     public final int screenY;
@@ -37,18 +39,6 @@ public class Player extends Entity {
         setSpeed(4);
         direction = DOWN;
     }
-
-    public void addKey() {
-        this.hasKey = true;
-    }
-
-    public void dropKey() {
-        this.hasKey = false;
-    }
-
-    public boolean hasKey() {
-        return this.hasKey;
-    }
  
     private void getPlayerImage() {
         images = new BufferedImage[8];
@@ -68,13 +58,48 @@ public class Player extends Entity {
 
     @Override
     public void move(int direction) {
+        int indexOfCollidingObject;
         collisionOn = false;
         this.direction = direction;
-        gamePanel.getCollisionManager().checkCollision(this);
+        gamePanel.getCollisionManager().checkCollisionWithSolidTiles(this);
+        indexOfCollidingObject = gamePanel.getCollisionManager().checkCollisionWithInteractiveObject(this);
+        interactWithObject(indexOfCollidingObject);
 
         if (collisionOn == false) {
             super.move(direction);
         }
+    }
+
+    private void interactWithObject(int indexOfObject) {
+        InteractiveObjectManager interactiveObjectManager = gamePanel.getInteractiveObjectManager();
+        boolean executeInteraction = false;
+        if (indexOfObject < 0) {
+            return;
+        }
+        InteractiveObject interactiveObject = interactiveObjectManager.getInteractiveObjects()[indexOfObject];
+        String objectName = interactiveObject.getName();
+
+        switch (objectName) {
+            case "key":
+                storedKeys++;
+                executeInteraction = true;
+                break;
+            case "door":
+                if (storedKeys > 0) {
+                    storedKeys--;
+                    executeInteraction = true;
+                }
+                break;
+            default:
+                break;
+        }
+        if(executeInteraction) {
+            interactiveObjectManager.handleInteraction(indexOfObject);
+        }
+    }
+
+    public boolean hasKey() {
+        return storedKeys > 0;
     }
 
     public void update() {
@@ -107,5 +132,10 @@ public class Player extends Entity {
         image = images[direction + spriteNum];
 
         graphics2D.drawImage(image, screenX, screenY, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+    }
+
+    @Override
+    public String toString() {
+        return "Player(x: " + getWorldX() + ", y: " + getWorldY() + ", hasKey: " + hasKey() + ", direction: " + getDirection() + ")";
     }
 }
