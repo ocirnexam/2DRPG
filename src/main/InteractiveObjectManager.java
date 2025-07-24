@@ -3,6 +3,7 @@ package main;
 import java.awt.Graphics2D;
 
 import interactiveObject.OpenDoor;
+import interactiveObject.Chest;
 import interactiveObject.Door;
 import interactiveObject.InteractiveObject;
 import interactiveObject.Key;
@@ -44,10 +45,25 @@ public class InteractiveObjectManager {
         interactiveObjects[3].setWorldX(60 * gamePanel.getTileSize());
         interactiveObjects[3].setBoundaries();
 
-        interactiveObjects[4] = new Key();
-        interactiveObjects[4].setWorldX(62 * gamePanel.getTileSize());
-        interactiveObjects[4].setWorldY(25 * gamePanel.getTileSize());
+        interactiveObjects[4] = new Door();
+        interactiveObjects[4].setWorldY(28 * gamePanel.getTileSize());
+        interactiveObjects[4].setWorldX(59 * gamePanel.getTileSize());
         interactiveObjects[4].setBoundaries();
+
+        interactiveObjects[5] = new Chest();
+        interactiveObjects[5].setWorldX(60 * gamePanel.getTileSize());
+        interactiveObjects[5].setWorldY(24 * gamePanel.getTileSize());
+        interactiveObjects[5].setBoundaries();
+
+        interactiveObjects[6] = new Key();
+        interactiveObjects[6].setWorldX(72 * gamePanel.getTileSize());
+        interactiveObjects[6].setWorldY(48 * gamePanel.getTileSize());
+        interactiveObjects[6].setBoundaries();
+
+        interactiveObjects[7] = new Key();
+        interactiveObjects[7].setWorldX(18 * gamePanel.getTileSize());
+        interactiveObjects[7].setWorldY(59 * gamePanel.getTileSize());
+        interactiveObjects[7].setBoundaries();
     }
 
     public void removeObject(int index) {
