@@ -1,9 +1,7 @@
 package main;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 
-import entity.Entity;
 import interactiveObject.OpenDoor;
 import interactiveObject.Door;
 import interactiveObject.InteractiveObject;
@@ -37,6 +35,10 @@ public class InteractiveObjectManager {
         interactiveObjects[2] = new Door();
         interactiveObjects[2].setWorldY(39 * gamePanel.getTileSize());
         interactiveObjects[2].setWorldX(58 * gamePanel.getTileSize());
+
+        interactiveObjects[3] = new Door();
+        interactiveObjects[3].setWorldY(55 * gamePanel.getTileSize());
+        interactiveObjects[3].setWorldX(60 * gamePanel.getTileSize());
     }
 
     public void draw(Graphics2D graphics2D) {
