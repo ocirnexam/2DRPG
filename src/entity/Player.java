@@ -21,6 +21,9 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
+    boolean isMoving = false;
+    int pixelCounter = 0;
+
     public Player (GamePanel gamePanel, KeyboardHandler keyboardHandler) {
         this.gamePanel = gamePanel;
         this.keyboardHandler = keyboardHandler;
@@ -28,7 +31,7 @@ public class Player extends Entity {
         screenX = gamePanel.screenWidth / 2 - (gamePanel.getTileSize() / 2);
         screenY = gamePanel.screenHeight / 2 - (gamePanel.getTileSize() / 2);
 
-        solidArea = new Rectangle(16, 28, 32, 32);
+        solidArea = new Rectangle(1, 1, gamePanel.getTileSize() - 2, gamePanel.getTileSize() - 2);
 
         this.setDefaultValues();
         this.getPlayerImage();
@@ -42,7 +45,7 @@ public class Player extends Entity {
     }
  
     private void getPlayerImage() {
-        images = new BufferedImage[9];
+        images = new BufferedImage[10];
         try {
             images[0] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Front1.png"));
             images[1] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Front2.png"));
@@ -53,6 +56,7 @@ public class Player extends Entity {
             images[6] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Left1.png"));
             images[7] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Left2.png"));
             images[8] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Front_Standing.png"));
+            images[9] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Back_Standing.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -99,7 +103,7 @@ public class Player extends Entity {
             case "chest":
                 gamePanel.getUIManager().setGameFinished();
                 gamePanel.stopMusic();
-                gamePanel.playSoundEffect(SoundManager.WALKING_SOUND);
+                gamePanel.playSoundEffect(SoundManager.GAME_FINISH);
             default:
                 break;
         }
@@ -117,29 +121,52 @@ public class Player extends Entity {
     }
 
     public void update() {
-        if (keyboardHandler.isAnyMoveKeyPressed()) {
-            if (keyboardHandler.upPressed) {
-                this.move(UP);
-            } 
-            else if (keyboardHandler.downPressed) {
-                this.move(DOWN);
+        if (isMoving == false) {
+            if (keyboardHandler.isAnyMoveKeyPressed()) {
+                if (keyboardHandler.upPressed) {
+                    this.move(UP);
+                } 
+                else if (keyboardHandler.downPressed) {
+                    this.move(DOWN);
+                }
+                else if (keyboardHandler.leftPressed) {
+                    this.move(LEFT);
+                }
+                else if (keyboardHandler.rightPressed) {
+                    this.move(RIGHT);
+                }
+                pixelCounter += getSpeed();
+                isMoving = true;
+                spriteCounter++;
+                if (spriteCounter > 12) {
+                    spriteNum++;
+                    spriteNum %= 2;
+                    spriteCounter = 0;
+                }
+            } else {
+                if (this.getDirection() == DOWN) {
+                    spriteNum = 8;
+                }
+                else if (this.getDirection() == UP) {
+                    spriteNum = 9;
+                } else {
+                    spriteNum = 1;
+                }
+                spriteCounter = 0;
             }
-            else if (keyboardHandler.leftPressed) {
-                this.move(LEFT);
-            }
-            else if (keyboardHandler.rightPressed) {
-                this.move(RIGHT);
-            }
-
+        } else {
+            this.move(getDirection());
+            pixelCounter += getSpeed();
             spriteCounter++;
             if (spriteCounter > 12) {
                 spriteNum++;
                 spriteNum %= 2;
                 spriteCounter = 0;
             }
-        } else {
-            spriteCounter = 0;
-            spriteNum = 8;
+            if(pixelCounter >= gamePanel.getTileSize()) {
+                pixelCounter = 0;
+                isMoving = false;
+            }
         }
     }
 
@@ -149,7 +176,7 @@ public class Player extends Entity {
         if (spriteNum < 8) {
             image = images[direction + spriteNum];
         } else {
-            image = images[8];
+            image = images[spriteNum];
         }
 
         graphics2D.drawImage(image, screenX, screenY, gamePanel.getTileSize(), gamePanel.getTileSize(), null);

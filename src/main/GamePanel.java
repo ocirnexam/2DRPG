@@ -74,6 +74,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void playSoundEffect(int soundEffect) {
         soundManager.selectSound(soundEffect);
+        soundManager.setVolume(0.7f);
         soundManager.play();
     }
 

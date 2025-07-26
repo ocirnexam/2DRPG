@@ -18,12 +18,14 @@ public class SoundManager {
     public static final int PICKUP_KEY_SOUND = 1;
     public static final int WALKING_SOUND = 2;
     public static final int OPEN_DOOR_SOUND = 3;
+    public static final int GAME_FINISH = 4;
 
     public SoundManager() {
         soundURL[0] = getClass().getResource("/res/sounds/2DRPG_ThemeSong.wav");
         soundURL[1] = getClass().getResource("/res/sounds/pickup_keys.wav");
         soundURL[2] = getClass().getResource("/res/sounds/walking.wav");
         soundURL[3] = getClass().getResource("/res/sounds/open_door_with_keys.wav");
+        soundURL[4] = getClass().getResource("/res/sounds/game_finish.wav");
     }
 
     public void selectSound(int index) {
