@@ -21,9 +21,6 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
-    boolean isMoving = false;
-    int pixelCounter = 0;
-
     public Player (GamePanel gamePanel, KeyboardHandler keyboardHandler) {
         this.gamePanel = gamePanel;
         this.keyboardHandler = keyboardHandler;
@@ -31,7 +28,7 @@ public class Player extends Entity {
         screenX = gamePanel.screenWidth / 2 - (gamePanel.getTileSize() / 2);
         screenY = gamePanel.screenHeight / 2 - (gamePanel.getTileSize() / 2);
 
-        solidArea = new Rectangle(1, 1, gamePanel.getTileSize() - 2, gamePanel.getTileSize() - 2);
+        solidArea = new Rectangle(16, 28, 32, 32);
 
         this.setDefaultValues();
         this.getPlayerImage();
@@ -121,52 +118,35 @@ public class Player extends Entity {
     }
 
     public void update() {
-        if (isMoving == false) {
-            if (keyboardHandler.isAnyMoveKeyPressed()) {
-                if (keyboardHandler.upPressed) {
-                    this.move(UP);
-                } 
-                else if (keyboardHandler.downPressed) {
-                    this.move(DOWN);
-                }
-                else if (keyboardHandler.leftPressed) {
-                    this.move(LEFT);
-                }
-                else if (keyboardHandler.rightPressed) {
-                    this.move(RIGHT);
-                }
-                pixelCounter += getSpeed();
-                isMoving = true;
-                spriteCounter++;
-                if (spriteCounter > 12) {
-                    spriteNum++;
-                    spriteNum %= 2;
-                    spriteCounter = 0;
-                }
-            } else {
-                if (this.getDirection() == DOWN) {
-                    spriteNum = 8;
-                }
-                else if (this.getDirection() == UP) {
-                    spriteNum = 9;
-                } else {
-                    spriteNum = 1;
-                }
-                spriteCounter = 0;
+        if (keyboardHandler.isAnyMoveKeyPressed()) {
+            if (keyboardHandler.upPressed) {
+                this.move(UP);
+            } 
+            else if (keyboardHandler.downPressed) {
+                this.move(DOWN);
             }
-        } else {
-            this.move(getDirection());
-            pixelCounter += getSpeed();
+            else if (keyboardHandler.leftPressed) {
+                this.move(LEFT);
+            }
+            else if (keyboardHandler.rightPressed) {
+                this.move(RIGHT);
+            }
             spriteCounter++;
             if (spriteCounter > 12) {
                 spriteNum++;
                 spriteNum %= 2;
                 spriteCounter = 0;
             }
-            if(pixelCounter >= gamePanel.getTileSize()) {
-                pixelCounter = 0;
-                isMoving = false;
+        } else {
+            if (this.getDirection() == DOWN) {
+                spriteNum = 8;
             }
+            else if (this.getDirection() == UP) {
+                spriteNum = 9;
+            } else {
+                spriteNum = 1;
+            }
+            spriteCounter = 0;
         }
     }
 
