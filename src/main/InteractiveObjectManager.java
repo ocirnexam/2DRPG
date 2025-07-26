@@ -83,6 +83,7 @@ public class InteractiveObjectManager {
         switch (objectName) {
             case "key":
                 gamePanel.playSoundEffect(SoundManager.PICKUP_KEY_SOUND);
+                gamePanel.getUIManager().showMessage("You found a key!");
                 this.removeObject(index);
                 break;
             case "door":

@@ -68,6 +68,10 @@ public class GamePanel extends JPanel implements Runnable {
         themeSoundManager.loop();
     }
 
+    public void stopMusic() {
+        themeSoundManager.stop();
+    }
+
     public void playSoundEffect(int soundEffect) {
         soundManager.selectSound(soundEffect);
         soundManager.play();
@@ -87,6 +91,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public SoundManager getSoundManager() {
         return soundManager;
+    }
+
+    public UI getUIManager() {
+        return uiManager;
     }
 
     @Override

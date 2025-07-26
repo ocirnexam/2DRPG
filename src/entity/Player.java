@@ -11,6 +11,7 @@ import interactiveObject.InteractiveObject;
 import main.GamePanel;
 import main.InteractiveObjectManager;
 import main.KeyboardHandler;
+import main.SoundManager;
 
 public class Player extends Entity {
     GamePanel gamePanel;
@@ -83,13 +84,21 @@ public class Player extends Entity {
             case "key":
                 storedKeys++;
                 executeInteraction = true;
+                gamePanel.getUIManager().showMessage("You found a key!");
                 break;
             case "door":
                 if (storedKeys > 0) {
                     storedKeys--;
                     executeInteraction = true;
+                    gamePanel.getUIManager().showMessage("Door opened!");
+                } else {
+                    gamePanel.getUIManager().showMessage("Door locked!");
                 }
                 break;
+            case "chest":
+                gamePanel.getUIManager().setGameFinished();
+                gamePanel.stopMusic();
+                gamePanel.playSoundEffect(SoundManager.WALKING_SOUND);
             default:
                 break;
         }
