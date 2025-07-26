@@ -8,6 +8,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import main.ScaleManager;
+
 public class UI {
     private GamePanel gamePanel;
     private Font displayFont;
@@ -57,8 +59,8 @@ public class UI {
             textLength = (int)graphics2D.getFontMetrics().getStringBounds(congratsText, graphics2D).getWidth();
 
 
-            x = gamePanel.screenWidth / 2 - textLength / 2;
-            y = gamePanel.screenHeight / 2 - (int) (gamePanel.getTileSize() * 1.5);
+            x = ScaleManager.getScreenWidth() / 2 - textLength / 2;
+            y = ScaleManager.getScreenHeight() / 2 - (int) (ScaleManager.getTileSize() * 1.5);
             
             graphics2D.drawString(congratsText, x, y);
 
@@ -68,24 +70,24 @@ public class UI {
         }
         else {
             graphics2D.setColor(Color.BLACK);
-            graphics2D.fillRoundRect(gamePanel.getTileSize()/2 - 20, gamePanel.getTileSize()/2 - 20, 130, gamePanel.getTileSize(), 20, 20);
+            graphics2D.fillRoundRect(ScaleManager.getTileSize()/2 - 20, ScaleManager.getTileSize()/2 - 20, 130, ScaleManager.getTileSize(), 20, 20);
             graphics2D.setColor(Color.WHITE);
-            graphics2D.drawRoundRect(gamePanel.getTileSize()/2 - 20, gamePanel.getTileSize()/2 - 20, 130, gamePanel.getTileSize(), 20, 20);
-            graphics2D.drawImage(keyImage, gamePanel.getTileSize()/2, gamePanel.getTileSize()/2, gamePanel.getTileSize()/2, gamePanel.getTileSize()/2, null);
+            graphics2D.drawRoundRect(ScaleManager.getTileSize()/2 - 20, ScaleManager.getTileSize()/2 - 20, 130, ScaleManager.getTileSize(), 20, 20);
+            graphics2D.drawImage(keyImage, ScaleManager.getTileSize()/2, ScaleManager.getTileSize()/2, ScaleManager.getTileSize()/2, ScaleManager.getTileSize()/2, null);
 
             // TIME Calculation and display
             playDuration += (double) 1/60;
             graphics2D.setColor(Color.BLACK);
-            graphics2D.drawString("Time: " + this.getTimeString(), gamePanel.getTileSize() / 2 + 1, (int)(gamePanel.getTileSize() * 1.5) + 1);
+            graphics2D.drawString("Time: " + this.getTimeString(), ScaleManager.getTileSize() / 2 + 1, (int)(ScaleManager.getTileSize() * 1.5) + 1);
             graphics2D.setColor(Color.WHITE);
-            graphics2D.drawString("Time: " + this.getTimeString(), gamePanel.getTileSize() / 2, (int)(gamePanel.getTileSize() * 1.5));
+            graphics2D.drawString("Time: " + this.getTimeString(), ScaleManager.getTileSize() / 2, (int)(ScaleManager.getTileSize() * 1.5));
 
             graphics2D.setFont(displayFont);
             graphics2D.setColor(Color.WHITE);
             graphics2D.drawString("x " + gamePanel.player.getKeys(), 70, 55);
 
             if(this.messageOn == true) {
-                graphics2D.drawString(this.message, gamePanel.getTileSize() * 2, gamePanel.getTileSize() * 6);
+                graphics2D.drawString(this.message, ScaleManager.getTileSize() * 2, ScaleManager.getTileSize() * 6);
                 this.messageCounter++;
                 if (this.messageCounter > 120) {
                     this.messageCounter = 0;

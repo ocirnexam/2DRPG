@@ -4,20 +4,18 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import main.GamePanel;
+
 public class Door extends InteractiveObject {
 
-    public Door() {
+    public Door(GamePanel gamePanel) {
+        super(gamePanel);
         setName("door");
         setCollision(true);
         this.loadImage();
     }
 
     private void loadImage() {
-        try {
-            setImage(ImageIO.read(getClass().getResourceAsStream("/objects/Door1.png")));
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        setScaledImage("Door1");
     }
 }

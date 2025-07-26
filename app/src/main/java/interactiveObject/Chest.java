@@ -4,20 +4,18 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import main.GamePanel;
+
 public class Chest extends InteractiveObject {
     
-    public Chest() {
+    public Chest(GamePanel gamePanel) {
+        super(gamePanel);
         setName("chest");
         setCollision(true);
         this.loadImage();
     }
 
     private void loadImage() {
-        try {
-            setImage(ImageIO.read(getClass().getResourceAsStream("/objects/Chest.png")));
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        setScaledImage("Chest");
     }
 }

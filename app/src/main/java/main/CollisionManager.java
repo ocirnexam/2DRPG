@@ -7,6 +7,8 @@ import entity.Player;
 import interactiveObject.InteractiveObject;
 import tile.TileManager;
 
+import main.ScaleManager;
+
 public class CollisionManager {
     
     private GamePanel gamePanel;
@@ -21,10 +23,10 @@ public class CollisionManager {
         int entityTopWorldY = entity.getWorldY() + entity.solidArea.y;
         int entityBottomWorldY = entity.getWorldY() + entity.solidArea.y + entity.solidArea.height;
 
-        int entityLeftCol = entityLeftWorldX / gamePanel.getTileSize();
-        int entityRightCol = entityRightWorldX / gamePanel.getTileSize();
-        int entityTopRow = entityTopWorldY / gamePanel.getTileSize();
-        int entityBottomRow = entityBottomWorldY / gamePanel.getTileSize();
+        int entityLeftCol = entityLeftWorldX / ScaleManager.getTileSize();
+        int entityRightCol = entityRightWorldX / ScaleManager.getTileSize();
+        int entityTopRow = entityTopWorldY / ScaleManager.getTileSize();
+        int entityBottomRow = entityBottomWorldY / ScaleManager.getTileSize();
 
         int tileNumber1, tileNumber2; // only 2 tiles can hit while moving in one direction
 
@@ -32,22 +34,22 @@ public class CollisionManager {
 
         switch (entity.getDirection()) {
             case Entity.UP:
-                entityTopRow = (entityTopWorldY - entity.getSpeed()) / gamePanel.getTileSize();
+                entityTopRow = (entityTopWorldY - entity.getSpeed()) / ScaleManager.getTileSize();
                 tileNumber1 = tileManager.getMapTileNum()[entityLeftCol][entityTopRow];
                 tileNumber2 = tileManager.getMapTileNum()[entityRightCol][entityTopRow];
                 break;
             case Entity.DOWN:
-                entityBottomRow = (entityBottomWorldY + entity.getSpeed()) / gamePanel.getTileSize();
+                entityBottomRow = (entityBottomWorldY + entity.getSpeed()) / ScaleManager.getTileSize();
                 tileNumber1 = tileManager.getMapTileNum()[entityLeftCol][entityBottomRow];
                 tileNumber2 = tileManager.getMapTileNum()[entityRightCol][entityBottomRow];
                 break;
             case Entity.LEFT:
-                entityLeftCol = (entityLeftWorldX - entity.getSpeed()) / gamePanel.getTileSize();
+                entityLeftCol = (entityLeftWorldX - entity.getSpeed()) / ScaleManager.getTileSize();
                 tileNumber1 = tileManager.getMapTileNum()[entityLeftCol][entityBottomRow];
                 tileNumber2 = tileManager.getMapTileNum()[entityLeftCol][entityTopRow];
                 break;
             case Entity.RIGHT:
-                entityRightCol = (entityRightWorldX + entity.getSpeed()) / gamePanel.getTileSize();
+                entityRightCol = (entityRightWorldX + entity.getSpeed()) / ScaleManager.getTileSize();
                 tileNumber1 = tileManager.getMapTileNum()[entityRightCol][entityBottomRow];
                 tileNumber2 = tileManager.getMapTileNum()[entityRightCol][entityTopRow];
                 break;

@@ -12,6 +12,7 @@ import main.GamePanel;
 import main.InteractiveObjectManager;
 import main.KeyboardHandler;
 import main.SoundManager;
+import main.ScaleManager;
 
 public class Player extends Entity {
     GamePanel gamePanel;
@@ -25,8 +26,8 @@ public class Player extends Entity {
         this.gamePanel = gamePanel;
         this.keyboardHandler = keyboardHandler;
 
-        screenX = gamePanel.screenWidth / 2 - (gamePanel.getTileSize() / 2);
-        screenY = gamePanel.screenHeight / 2 - (gamePanel.getTileSize() / 2);
+        screenX = ScaleManager.getScreenWidth() / 2 - (ScaleManager.getTileSize() / 2);
+        screenY = ScaleManager.getScreenHeight() / 2 - (ScaleManager.getTileSize() / 2);
 
         solidArea = new Rectangle(16, 28, 32, 32);
 
@@ -35,28 +36,36 @@ public class Player extends Entity {
     }
 
     private void setDefaultValues() {
-        setWorldX(24 * gamePanel.getTileSize());
-        setWorldY(12 * gamePanel.getTileSize());
+        setWorldX(24 * ScaleManager.getTileSize());
+        setWorldY(12 * ScaleManager.getTileSize());
         setSpeed(4);
         direction = DOWN;
+    }
+
+    private void setupPlayerImage(int index, String imageName) {
+        try {
+            BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/player/" + imageName + ".png"));
+            BufferedImage scaledImage = new BufferedImage(ScaleManager.getTileSize(), ScaleManager.getTileSize(), image.getType());
+            Graphics2D scaledImageGraphics2D = scaledImage.createGraphics();
+            scaledImageGraphics2D.drawImage(image, 0, 0, ScaleManager.getTileSize(), ScaleManager.getTileSize(), null);
+            images[index] = scaledImage;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
  
     private void getPlayerImage() {
         images = new BufferedImage[10];
-        try {
-            images[0] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Front1.png"));
-            images[1] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Front2.png"));
-            images[2] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Back1.png"));
-            images[3] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Back2.png"));
-            images[4] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Right1.png"));
-            images[5] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Right2.png"));
-            images[6] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Left1.png"));
-            images[7] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Left2.png"));
-            images[8] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Front_Standing.png"));
-            images[9] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Back_Standing.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            setupPlayerImage(0, "Character_Front1");
+            setupPlayerImage(1, "Character_Front2");
+            setupPlayerImage(2, "Character_Back1");
+            setupPlayerImage(3, "Character_Back2");
+            setupPlayerImage(4, "Character_Right1");
+            setupPlayerImage(5, "Character_Right2");
+            setupPlayerImage(6, "Character_Left1");
+            setupPlayerImage(7, "Character_Left2");
+            setupPlayerImage(8, "Character_Front_Standing");
+            setupPlayerImage(9, "Character_Back_Standing");
     }
 
     @Override
@@ -159,7 +168,7 @@ public class Player extends Entity {
             image = images[spriteNum];
         }
 
-        graphics2D.drawImage(image, screenX, screenY, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+        graphics2D.drawImage(image, screenX, screenY, null);
     }
 
     @Override

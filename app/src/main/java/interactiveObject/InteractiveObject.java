@@ -3,10 +3,16 @@ package interactiveObject;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 import main.GamePanel;
+import main.ScaleManager;
+
+import entity.Player;
 
 public class InteractiveObject {
+    private GamePanel gamePanel;
     private BufferedImage image;
     private String name;
     private boolean collision;
@@ -14,8 +20,20 @@ public class InteractiveObject {
     private int worldY = 0;
     protected final Rectangle solidArea = new Rectangle(0, 0, 48, 48);
 
-    public InteractiveObject() {
+    public InteractiveObject(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+    }
 
+    protected void setScaledImage(String imageName) {
+        try {
+            BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/objects/" + imageName + ".png"));
+            BufferedImage scaledImage = new BufferedImage(ScaleManager.getTileSize(), ScaleManager.getTileSize(), image.getType());
+            Graphics2D scaledImageGraphics2D = scaledImage.createGraphics();
+            scaledImageGraphics2D.drawImage(image, 0, 0, ScaleManager.getTileSize(), ScaleManager.getTileSize(), null);
+            this.image = scaledImage;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public BufferedImage getImage() {
@@ -70,9 +88,9 @@ public class InteractiveObject {
         this.worldY = worldY;
     }
     
-    public void draw(Graphics2D graphics2D, GamePanel gamePanel) {
-        int screenX = worldX - gamePanel.player.getWorldX() + gamePanel.player.screenX;
-        int screenY = worldY - gamePanel.player.getWorldY() + gamePanel.player.screenY;
-        graphics2D.drawImage(getImage(), screenX, screenY, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+    public void draw(Graphics2D graphics2D, Player player) {
+        int screenX = worldX - player.getWorldX() + player.screenX;
+        int screenY = worldY - player.getWorldY() + player.screenY;
+        graphics2D.drawImage(getImage(), screenX, screenY, null);
     }
 }

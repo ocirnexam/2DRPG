@@ -4,20 +4,18 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import main.GamePanel;
+
 public class Key extends InteractiveObject {
 
-    public Key() {
+    public Key(GamePanel gamePanel) {
+        super(gamePanel);
         setName("key");
         setCollision(false);
         this.loadImage();
     }
 
     private void loadImage() {
-        try {
-            setImage(ImageIO.read(getClass().getResourceAsStream("/objects/Key1.png")));
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        setScaledImage("Key1");
     }
 }
