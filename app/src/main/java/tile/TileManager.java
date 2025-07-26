@@ -21,7 +21,7 @@ public class TileManager {
 
     public TileManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        tiles = new Tile[6];
+        tiles = new Tile[14];
         mapTileNum = new int[ScaleManager.getMaxWorldColumns()][ScaleManager.getMaxWorldRows()];
         this.getTileImages();
         this.loadMap("/maps/map_0_2.txt");
@@ -43,6 +43,14 @@ public class TileManager {
         setupTile(3, "Wall", true);
         setupTile(4, "Wood", false);
         setupTile(5, "Forest", true);
+        setupTile(6, "GrassLandBase", false);
+        setupTile(7, "SandBase", false);
+        setupTile(8, "WaterBase", true);
+        setupTile(9, "ForestToGrassLandRight", true);
+        setupTile(10, "GrassToWaterTop", true);
+        setupTile(11, "GrassToWaterTopLeftCorner", true);
+        setupTile(12, "GrassToWaterTopRightCorner", true);
+        setupTile(13, "GrassToWaterTopRightCornerOut", true);
     }
 
     public void loadMap(String mapFileName) {
