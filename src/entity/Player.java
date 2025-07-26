@@ -42,7 +42,7 @@ public class Player extends Entity {
     }
  
     private void getPlayerImage() {
-        images = new BufferedImage[8];
+        images = new BufferedImage[9];
         try {
             images[0] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Front1.png"));
             images[1] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Front2.png"));
@@ -52,6 +52,7 @@ public class Player extends Entity {
             images[5] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Right2.png"));
             images[6] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Left1.png"));
             images[7] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Left2.png"));
+            images[8] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Front_Standing.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -136,13 +137,20 @@ public class Player extends Entity {
                 spriteNum %= 2;
                 spriteCounter = 0;
             }
+        } else {
+            spriteCounter = 0;
+            spriteNum = 8;
         }
     }
 
     public void draw(Graphics2D graphics2D) {
         BufferedImage image = null;
 
-        image = images[direction + spriteNum];
+        if (spriteNum < 8) {
+            image = images[direction + spriteNum];
+        } else {
+            image = images[8];
+        }
 
         graphics2D.drawImage(image, screenX, screenY, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
     }
