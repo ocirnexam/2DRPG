@@ -82,9 +82,11 @@ public class InteractiveObjectManager {
 
         switch (objectName) {
             case "key":
+                gamePanel.playSoundEffect(SoundManager.PICKUP_KEY_SOUND);
                 this.removeObject(index);
                 break;
             case "door":
+                gamePanel.playSoundEffect(SoundManager.OPEN_DOOR_SOUND);
                 int worldX = interactiveObject.getWorldX();
                 int worldY = interactiveObject.getWorldY();
                 this.interactiveObjects[index] = new OpenDoor();

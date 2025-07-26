@@ -102,6 +102,10 @@ public class Player extends Entity {
         return storedKeys > 0;
     }
 
+    public int getKeys() {
+        return storedKeys;
+    }
+
     public void update() {
         if (keyboardHandler.isAnyMoveKeyPressed()) {
             if (keyboardHandler.upPressed) {

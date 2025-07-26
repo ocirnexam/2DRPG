@@ -21,15 +21,18 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
 
+    // System
     Thread gameThread;
     KeyboardHandler keyboardHandler = new KeyboardHandler();
-
-    // Entities
-    public final Player player = new Player(this, keyboardHandler);
-
     private TileManager tileManager = new TileManager(this);
     private CollisionManager collisionManager = new CollisionManager(this);
     private InteractiveObjectManager interactiveObjectManager = new InteractiveObjectManager(this);
+    private SoundManager soundManager = new SoundManager();
+    private SoundManager themeSoundManager = new SoundManager();
+    private UI uiManager = new UI(this);
+
+    // Entities
+    public final Player player = new Player(this, keyboardHandler);
 
     // World Settings
     public final int maxWorldCol = 105;
@@ -55,6 +58,19 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void gameSetup() {
         interactiveObjectManager.placeInteractiveObjects();
+        playMusic();
+    }
+
+    public void playMusic() {
+        themeSoundManager.selectSound(SoundManager.THEME_MUSIC);
+        themeSoundManager.setVolume(0.5f);
+        themeSoundManager.play();
+        themeSoundManager.loop();
+    }
+
+    public void playSoundEffect(int soundEffect) {
+        soundManager.selectSound(soundEffect);
+        soundManager.play();
     }
 
     public TileManager getTileManager() {
@@ -67,6 +83,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public InteractiveObjectManager getInteractiveObjectManager() {
         return interactiveObjectManager;
+    }
+
+    public SoundManager getSoundManager() {
+        return soundManager;
     }
 
     @Override
@@ -111,6 +131,7 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D graphics2D = (Graphics2D) graphics;
         tileManager.draw(graphics2D);
         interactiveObjectManager.draw(graphics2D);
+        uiManager.draw(graphics2D);
         player.draw(graphics2D);
     }
 
