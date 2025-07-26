@@ -14,7 +14,7 @@ public class Door extends InteractiveObject {
 
     private void loadImage() {
         try {
-            setImage(ImageIO.read(getClass().getResourceAsStream("/res/objects/Door1.png")));
+            setImage(ImageIO.read(getClass().getResourceAsStream("/objects/Door1.png")));
         }
         catch (IOException e) {
             e.printStackTrace();

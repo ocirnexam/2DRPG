@@ -44,16 +44,16 @@ public class Player extends Entity {
     private void getPlayerImage() {
         images = new BufferedImage[10];
         try {
-            images[0] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Front1.png"));
-            images[1] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Front2.png"));
-            images[2] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Back1.png"));
-            images[3] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Back2.png"));
-            images[4] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Right1.png"));
-            images[5] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Right2.png"));
-            images[6] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Left1.png"));
-            images[7] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Left2.png"));
-            images[8] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Front_Standing.png"));
-            images[9] = ImageIO.read(getClass().getResourceAsStream("/res/player/Character_Back_Standing.png"));
+            images[0] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Front1.png"));
+            images[1] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Front2.png"));
+            images[2] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Back1.png"));
+            images[3] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Back2.png"));
+            images[4] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Right1.png"));
+            images[5] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Right2.png"));
+            images[6] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Left1.png"));
+            images[7] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Left2.png"));
+            images[8] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Front_Standing.png"));
+            images[9] = ImageIO.read(getClass().getResourceAsStream("/player/Character_Back_Standing.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

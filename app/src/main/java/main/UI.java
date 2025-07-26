@@ -29,7 +29,7 @@ public class UI {
 
     private void loadImages() {
         try {
-            keyImage = ImageIO.read(getClass().getResourceAsStream("/res/objects/Key1.png"));
+            keyImage = ImageIO.read(getClass().getResourceAsStream("/objects/Key1.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

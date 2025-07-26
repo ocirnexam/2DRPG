@@ -4,17 +4,17 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Key extends InteractiveObject {
+public class OpenDoor extends InteractiveObject {
 
-    public Key() {
-        setName("key");
+    public OpenDoor() {
+        setName("open_door");
         setCollision(false);
         this.loadImage();
     }
 
     private void loadImage() {
         try {
-            setImage(ImageIO.read(getClass().getResourceAsStream("/res/objects/Key1.png")));
+            setImage(ImageIO.read(getClass().getResourceAsStream("/objects/OpenDoor.png")));
         }
         catch (IOException e) {
             e.printStackTrace();

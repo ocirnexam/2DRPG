@@ -20,17 +20,17 @@ public class TileManager {
         tiles = new Tile[6];
         mapTileNum = new int[gamePanel.maxWorldCol][gamePanel.maxWorldRow];
         this.getTileImages();
-        this.loadMap("/res/maps/map_0_2.txt");
+        this.loadMap("/maps/map_0_2.txt");
     }
 
     private void getTileImages() {
         try {
-            tiles[0] = new Tile(ImageIO.read(getClass().getResourceAsStream("/res/tiles/GrassLand.png")), false);
-            tiles[1] = new Tile(ImageIO.read(getClass().getResourceAsStream("/res/tiles/Sand.png")), false);
-            tiles[2] = new Tile(ImageIO.read(getClass().getResourceAsStream("/res/tiles/Water.png")), true);
-            tiles[3] = new Tile(ImageIO.read(getClass().getResourceAsStream("/res/tiles/Wall.png")), true);
-            tiles[4] = new Tile(ImageIO.read(getClass().getResourceAsStream("/res/tiles/Wood.png")), false);
-            tiles[5] = new Tile(ImageIO.read(getClass().getResourceAsStream("/res/tiles/Forest.png")), true);
+            tiles[0] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/GrassLand.png")), false);
+            tiles[1] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/Sand.png")), false);
+            tiles[2] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/Water.png")), true);
+            tiles[3] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/Wall.png")), true);
+            tiles[4] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/Wood.png")), false);
+            tiles[5] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/Forest.png")), true);
         } catch (IOException e) {
             e.printStackTrace();
         }
