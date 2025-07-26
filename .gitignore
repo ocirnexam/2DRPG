@@ -5,3 +5,5 @@ MANIFEST.MF
 
 # Ignore Gradle build output directory
 build
+
+.DS_Store
