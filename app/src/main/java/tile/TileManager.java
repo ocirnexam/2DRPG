@@ -21,7 +21,7 @@ public class TileManager {
 
     public TileManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        tiles = new Tile[14];
+        tiles = new Tile[21];
         mapTileNum = new int[ScaleManager.getMaxWorldColumns()][ScaleManager.getMaxWorldRows()];
         this.getTileImages();
         this.loadMap("/maps/map_0_2.txt");
@@ -46,11 +46,16 @@ public class TileManager {
         setupTile(6, "GrassLandBase", false);
         setupTile(7, "SandBase", false);
         setupTile(8, "WaterBase", true);
-        setupTile(9, "ForestToGrassLandRight", true);
         setupTile(10, "GrassToWaterTop", true);
         setupTile(11, "GrassToWaterTopLeftCorner", true);
         setupTile(12, "GrassToWaterTopRightCorner", true);
         setupTile(13, "GrassToWaterTopRightCornerOut", true);
+        setupTile(14, "GrassToWaterTopLeftCornerOut", true);
+        setupTile(15, "GrassToWaterBottomLeftCorner", true);
+        setupTile(16, "GrassToWaterBottomRightCorner", true);
+        setupTile(17, "GrassToWaterLeft", true);
+        setupTile(18, "GrassToWaterRight", true);
+        setupTile(19, "GrassToWaterBottom", true);
     }
 
     public void loadMap(String mapFileName) {
@@ -64,6 +69,10 @@ public class TileManager {
                 String line = bufferedReader.readLine();
                 while(col < ScaleManager.getMaxWorldColumns()) {
                     String numbers[] = line.split(" ");
+                    if (numbers[col].startsWith("0"))
+                    {
+                        numbers[col] = numbers[col].substring(1);
+                    }
                     int tileNumber = Integer.parseInt(numbers[col]);
                     mapTileNum[col][row] = tileNumber;
                     col++;
