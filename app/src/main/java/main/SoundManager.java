@@ -14,6 +14,8 @@ public class SoundManager {
     Clip clip;
     URL soundURL[] = new URL[30];
 
+    private long clipTime = 0;
+
     public static final int THEME_MUSIC = 0;
     public static final int PICKUP_KEY_SOUND = 1;
     public static final int WALKING_SOUND = 2;
@@ -56,6 +58,16 @@ public class SoundManager {
 
     public void loop() {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    public void pause() {
+        this.clipTime = clip.getMicrosecondPosition();
+        clip.stop();
+    }
+
+    public void resume() {
+        clip.setMicrosecondPosition(this.clipTime);
+        clip.start();
     }
 
     public void stop() {

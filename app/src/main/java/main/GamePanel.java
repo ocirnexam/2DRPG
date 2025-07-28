@@ -14,7 +14,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // System
     Thread gameThread;
-    KeyboardHandler keyboardHandler = new KeyboardHandler();
+    KeyboardManager keyboardManager = new KeyboardManager();
     private TileManager tileManager = new TileManager(this);
     private CollisionManager collisionManager = new CollisionManager(this);
     private InteractiveObjectManager interactiveObjectManager = new InteractiveObjectManager(this);
@@ -23,7 +23,12 @@ public class GamePanel extends JPanel implements Runnable {
     private UI uiManager = new UI(this);
 
     // Entities
-    public final Player player = new Player(this, keyboardHandler);
+    public final Player player = new Player(this, keyboardManager);
+
+    // Game state
+    private int gameState = 0;
+    public static final int PLAY_STATE = 1;
+    public static final int PAUSE_STATE = 2;
 
     private int FPS = 60;
     private int secondInNanoSeconds = 1000000000;
@@ -32,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setPreferredSize(new Dimension(ScaleManager.getScreenWidth(), ScaleManager.getScreenHeight()));
         this.setBackground(Color.WHITE);
         this.setDoubleBuffered(true);
-        this.addKeyListener(keyboardHandler);
+        this.addKeyListener(keyboardManager);
         this.setFocusable(true);
     }
 
@@ -44,17 +49,26 @@ public class GamePanel extends JPanel implements Runnable {
     public void gameSetup() {
         interactiveObjectManager.placeInteractiveObjects();
         playMusic();
+        gameState = PLAY_STATE;
     }
 
-    public void playMusic() {
+    private void playMusic() {
         themeSoundManager.selectSound(SoundManager.THEME_MUSIC);
         themeSoundManager.setVolume(0.5f);
         themeSoundManager.play();
         themeSoundManager.loop();
     }
 
-    public void stopMusic() {
+    private void stopMusic() {
         themeSoundManager.stop();
+    }
+
+    private void pauseMusic() {
+        themeSoundManager.pause();
+    }
+
+    private void resumeMusic() {
+        themeSoundManager.resume();
     }
 
     public void playSoundEffect(int soundEffect) {
@@ -81,6 +95,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public UI getUIManager() {
         return uiManager;
+    }
+
+    public int getGameState() {
+        return gameState;
     }
 
     @Override
@@ -117,7 +135,18 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private void update() {
-        player.update();
+        if (gameState == PLAY_STATE) {
+            if (keyboardManager.pausePressed) {
+                gameState = PAUSE_STATE;
+                pauseMusic();
+            }
+            player.update();
+        } else if (gameState == PAUSE_STATE) {
+            if (!keyboardManager.pausePressed) {
+                gameState = PLAY_STATE;
+                resumeMusic();
+            }
+        }
     }
 
     public void paintComponent(Graphics graphics) {

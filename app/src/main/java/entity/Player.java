@@ -10,21 +10,21 @@ import javax.imageio.ImageIO;
 import interactiveObject.InteractiveObject;
 import main.GamePanel;
 import main.InteractiveObjectManager;
-import main.KeyboardHandler;
+import main.KeyboardManager;
 import main.SoundManager;
 import main.ScaleManager;
 
 public class Player extends Entity {
     GamePanel gamePanel;
-    KeyboardHandler keyboardHandler;
+    KeyboardManager keyboardManager;
     int storedKeys = 0;
 
     public final int screenX;
     public final int screenY;
 
-    public Player (GamePanel gamePanel, KeyboardHandler keyboardHandler) {
+    public Player (GamePanel gamePanel, KeyboardManager keyboardManager) {
         this.gamePanel = gamePanel;
-        this.keyboardHandler = keyboardHandler;
+        this.keyboardManager = keyboardManager;
 
         screenX = ScaleManager.getScreenWidth() / 2 - (ScaleManager.getTileSize() / 2);
         screenY = ScaleManager.getScreenHeight() / 2 - (ScaleManager.getTileSize() / 2);
@@ -107,8 +107,6 @@ public class Player extends Entity {
                 }
                 break;
             case "chest":
-                gamePanel.getUIManager().setGameFinished();
-                gamePanel.stopMusic();
                 gamePanel.playSoundEffect(SoundManager.GAME_FINISH);
             default:
                 break;
@@ -127,17 +125,17 @@ public class Player extends Entity {
     }
 
     public void update() {
-        if (keyboardHandler.isAnyMoveKeyPressed()) {
-            if (keyboardHandler.upPressed) {
+        if (keyboardManager.isAnyMoveKeyPressed()) {
+            if (keyboardManager.upPressed) {
                 this.move(UP);
             } 
-            else if (keyboardHandler.downPressed) {
+            else if (keyboardManager.downPressed) {
                 this.move(DOWN);
             }
-            else if (keyboardHandler.leftPressed) {
+            else if (keyboardManager.leftPressed) {
                 this.move(LEFT);
             }
-            else if (keyboardHandler.rightPressed) {
+            else if (keyboardManager.rightPressed) {
                 this.move(RIGHT);
             }
             spriteCounter++;
