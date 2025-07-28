@@ -36,8 +36,8 @@ public class Player extends Entity {
     }
 
     private void setDefaultValues() {
-        setWorldX(24 * ScaleManager.getTileSize());
-        setWorldY(12 * ScaleManager.getTileSize());
+        setWorldX(47 * ScaleManager.getTileSize());
+        setWorldY(54 * ScaleManager.getTileSize());
         setSpeed(4);
         direction = DOWN;
     }

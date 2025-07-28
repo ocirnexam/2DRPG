@@ -21,7 +21,7 @@ public class TileManager {
 
     public TileManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        tiles = new Tile[21];
+        tiles = new Tile[40];
         mapTileNum = new int[ScaleManager.getMaxWorldColumns()][ScaleManager.getMaxWorldRows()];
         this.getTileImages();
         this.loadMap("/maps/map_0_2.txt");
@@ -56,6 +56,24 @@ public class TileManager {
         setupTile(17, "GrassToWaterLeft", true);
         setupTile(18, "GrassToWaterRight", true);
         setupTile(19, "GrassToWaterBottom", true);
+        setupTile(20, "GrassToWaterSingleVertical", true);
+        setupTile(21, "GrassToWaterSingleHorizontal", true);
+        setupTile(22, "GrassToWaterRightU", true);
+        setupTile(23, "GrassToWaterLeftU", true);
+        setupTile(24, "GrassToWaterTopU", true);
+        setupTile(25, "GrassToWaterBottomU", true);
+        setupTile(26, "GrassToSandTop", false);
+        setupTile(27, "GrassToSandLeft", false);
+        setupTile(28, "GrassToSandRight", false);
+        setupTile(29, "GrassToSandBottom", false);
+        setupTile(30, "GrassToSandCornerTopLeft", false);
+        setupTile(31, "GrassToSandCornerTopRight", false);
+        setupTile(32, "GrassToSandCornerBottomLeft", false);
+        setupTile(33, "GrassToSandCornerBottomRight", false);
+        setupTile(34, "GrassToSandCornerTopLeftOut", false);
+        setupTile(35, "GrassToSandCornerTopRightOut", false);
+        setupTile(36, "GrassToSandCornerBottomLeftOut", false);
+        setupTile(37, "GrassToSandCornerBottomRightOut", false);
     }
 
     public void loadMap(String mapFileName) {
