@@ -12,8 +12,6 @@ import javax.imageio.ImageIO;
 import main.ScaleManager;
 import main.GamePanel;
 
-import entity.Player;
-
 public class TileManager {
     private GamePanel gamePanel;
     Tile[] tiles;

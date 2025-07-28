@@ -10,8 +10,6 @@ import interactiveObject.Key;
 
 import main.ScaleManager;
 
-import entity.Player;
-
 public class InteractiveObjectManager {
     private GamePanel gamePanel;
 
