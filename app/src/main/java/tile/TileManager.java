@@ -74,6 +74,8 @@ public class TileManager {
         setupTile(35, "GrassToSandCornerTopRightOut", false);
         setupTile(36, "GrassToSandCornerBottomLeftOut", false);
         setupTile(37, "GrassToSandCornerBottomRightOut", false);
+        setupTile(38, "WallVertical", true);
+        setupTile(39, "WallHorizontal", true);
     }
 
     public void loadMap(String mapFileName) {
