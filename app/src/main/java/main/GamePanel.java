@@ -18,6 +18,7 @@ public class GamePanel extends JPanel implements Runnable {
     private TileManager tileManager = new TileManager(this);
     private CollisionManager collisionManager = new CollisionManager(this);
     private InteractiveObjectManager interactiveObjectManager = new InteractiveObjectManager(this);
+    private NPCManager npcManager = new NPCManager(this);
     private SoundManager soundManager = new SoundManager();
     private SoundManager themeSoundManager = new SoundManager();
     private UI uiManager = new UI(this);
@@ -48,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void gameSetup() {
         interactiveObjectManager.placeInteractiveObjects();
+        npcManager.createNPCs();
         playMusic();
         gameState = PLAY_STATE;
     }
@@ -141,6 +143,7 @@ public class GamePanel extends JPanel implements Runnable {
                 pauseMusic();
             }
             player.update();
+            npcManager.update();
         } else if (gameState == PAUSE_STATE) {
             if (!keyboardManager.pausePressed) {
                 gameState = PLAY_STATE;
@@ -154,6 +157,7 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D graphics2D = (Graphics2D) graphics;
         tileManager.draw(graphics2D); 
         interactiveObjectManager.draw(graphics2D);
+        npcManager.draw(graphics2D);
         player.draw(graphics2D);
         uiManager.draw(graphics2D);
     }

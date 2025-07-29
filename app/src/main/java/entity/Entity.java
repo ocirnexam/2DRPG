@@ -1,20 +1,31 @@
 package entity;
 
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import main.GamePanel;
+import main.ScaleManager;
 
 public abstract class Entity {
-    private int worldX, worldY;
-    private int speed;
 
-    public BufferedImage down1, down2;
-    public BufferedImage[] images;
+    protected int worldX, worldY;
+    protected int speed;
 
-    public int spriteCounter = 0;
-    public int spriteNum = 0;
+    protected GamePanel gamePanel;
+
+    // sprite array
+    protected BufferedImage[] images;
+
+    // sprite update variables
+    protected int spriteCounter = 0;
+    protected int spriteNum = 0;
 
     // Collsision details
-    public Rectangle solidArea;
+    public Rectangle solidArea = new Rectangle(16, 28, 32, 32);;
     public boolean collisionOn = false;
 
     public static final int DOWN = 0;
@@ -23,6 +34,26 @@ public abstract class Entity {
     public static final int LEFT = 6;
 
     protected int direction;
+
+    protected boolean isStanding;
+
+    protected Entity(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+        setDefaultValues();
+        getSprites();
+    }
+    
+    protected void setupEntityImage(int index, String imagePath) {
+        try {
+            BufferedImage image = ImageIO.read(getClass().getResourceAsStream(imagePath + ".png"));
+            BufferedImage scaledImage = new BufferedImage(ScaleManager.getTileSize(), ScaleManager.getTileSize(), image.getType());
+            Graphics2D scaledImageGraphics2D = scaledImage.createGraphics();
+            scaledImageGraphics2D.drawImage(image, 0, 0, ScaleManager.getTileSize(), ScaleManager.getTileSize(), null);
+            images[index] = scaledImage;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void setWorldX(int x) {
         this.worldX = x;
@@ -73,4 +104,12 @@ public abstract class Entity {
         }
         this.direction = direction;
     }
+
+    protected abstract void setDefaultValues();
+
+    protected abstract void getSprites();
+
+    public abstract void draw(Graphics2D graphics2D);
+
+    public abstract void update();
 }

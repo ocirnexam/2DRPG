@@ -15,7 +15,6 @@ import main.SoundManager;
 import main.ScaleManager;
 
 public class Player extends Entity {
-    GamePanel gamePanel;
     KeyboardManager keyboardManager;
     int storedKeys = 0;
 
@@ -23,49 +22,34 @@ public class Player extends Entity {
     public final int screenY;
 
     public Player (GamePanel gamePanel, KeyboardManager keyboardManager) {
-        this.gamePanel = gamePanel;
+        super(gamePanel);
         this.keyboardManager = keyboardManager;
 
         screenX = ScaleManager.getScreenWidth() / 2 - (ScaleManager.getTileSize() / 2);
         screenY = ScaleManager.getScreenHeight() / 2 - (ScaleManager.getTileSize() / 2);
-
-        solidArea = new Rectangle(16, 28, 32, 32);
-
-        this.setDefaultValues();
-        this.getPlayerImage();
     }
 
-    private void setDefaultValues() {
-        setWorldX(47 * ScaleManager.getTileSize());
-        setWorldY(54 * ScaleManager.getTileSize());
+    @Override
+    protected void setDefaultValues() {
+        setWorldX(23 * ScaleManager.getTileSize());
+        setWorldY(11 * ScaleManager.getTileSize());
         setSpeed(4);
         direction = DOWN;
     }
-
-    private void setupPlayerImage(int index, String imageName) {
-        try {
-            BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/player/" + imageName + ".png"));
-            BufferedImage scaledImage = new BufferedImage(ScaleManager.getTileSize(), ScaleManager.getTileSize(), image.getType());
-            Graphics2D scaledImageGraphics2D = scaledImage.createGraphics();
-            scaledImageGraphics2D.drawImage(image, 0, 0, ScaleManager.getTileSize(), ScaleManager.getTileSize(), null);
-            images[index] = scaledImage;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
  
-    private void getPlayerImage() {
+    @Override
+    protected void getSprites() {
         images = new BufferedImage[10];
-            setupPlayerImage(0, "Character_Front1");
-            setupPlayerImage(1, "Character_Front2");
-            setupPlayerImage(2, "Character_Back1");
-            setupPlayerImage(3, "Character_Back2");
-            setupPlayerImage(4, "Character_Right1");
-            setupPlayerImage(5, "Character_Right2");
-            setupPlayerImage(6, "Character_Left1");
-            setupPlayerImage(7, "Character_Left2");
-            setupPlayerImage(8, "Character_Front_Standing");
-            setupPlayerImage(9, "Character_Back_Standing");
+        setupEntityImage(0, "/player/Character_Front1");
+        setupEntityImage(1, "/player/Character_Front2");
+        setupEntityImage(2, "/player/Character_Back1");
+        setupEntityImage(3, "/player/Character_Back2");
+        setupEntityImage(4, "/player/Character_Right1");
+        setupEntityImage(5, "/player/Character_Right2");
+        setupEntityImage(6, "/player/Character_Left1");
+        setupEntityImage(7, "/player/Character_Left2");
+        setupEntityImage(8, "/player/Character_Front_Standing");
+        setupEntityImage(9, "/player/Character_Back_Standing");
     }
 
     @Override
@@ -126,6 +110,7 @@ public class Player extends Entity {
         return storedKeys;
     }
 
+    @Override
     public void update() {
         if (keyboardManager.isAnyMoveKeyPressed()) {
             if (keyboardManager.upPressed) {
