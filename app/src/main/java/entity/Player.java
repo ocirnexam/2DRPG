@@ -95,12 +95,14 @@ public class Player extends Entity {
             case "key":
                 storedKeys++;
                 executeInteraction = true;
+                gamePanel.playSoundEffect(SoundManager.PICKUP_KEY_SOUND);
                 gamePanel.getUIManager().showMessage("You found a key!");
                 break;
             case "door":
                 if (storedKeys > 0) {
                     storedKeys--;
                     executeInteraction = true;
+                    gamePanel.playSoundEffect(SoundManager.OPEN_DOOR_SOUND);
                     gamePanel.getUIManager().showMessage("Door opened!");
                 } else {
                     gamePanel.getUIManager().showMessage("Door locked!");

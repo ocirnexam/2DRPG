@@ -17,6 +17,7 @@ public class UI {
     Color BlackTransparent50 = new Color(0, 0, 0, 127);
 
     private Graphics2D graphics2D;
+    BufferedImage keyImage;
 
     private boolean messageOn = false;
     private int messageCounter = 0;
@@ -32,11 +33,11 @@ public class UI {
     }
 
     private void loadImages() {
-        // try {
-
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
+        try {
+            keyImage = ImageIO.read(getClass().getResourceAsStream("/objects/Key1.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         
     }
 
@@ -52,7 +53,24 @@ public class UI {
     public void draw(Graphics2D graphics2D) {
 
         if(gamePanel.getGameState() == GamePanel.PLAY_STATE) {
-            // play state stuff here
+            graphics2D.setColor(Color.BLACK);
+            graphics2D.fillRoundRect(ScaleManager.getTileSize()/2 - 20, ScaleManager.getTileSize()/2 - 20, 130, ScaleManager.getTileSize(), 20, 20);
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.drawRoundRect(ScaleManager.getTileSize()/2 - 20, ScaleManager.getTileSize()/2 - 20, 130, ScaleManager.getTileSize(), 20, 20);
+            graphics2D.drawImage(keyImage, ScaleManager.getTileSize()/2, ScaleManager.getTileSize()/2, ScaleManager.getTileSize()/2, ScaleManager.getTileSize()/2, null);
+
+            graphics2D.setFont(displayFont);
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.drawString("x " + gamePanel.player.getKeys(), 70, 55);
+
+            if(this.messageOn == true) {
+                graphics2D.drawString(this.message, ScaleManager.getTileSize() * 2, ScaleManager.getTileSize() * 6);
+                this.messageCounter++;
+                if (this.messageCounter > 120) {
+                    this.messageCounter = 0;
+                    this.messageOn = false;
+                }
+            }
         }
         else if (gamePanel.getGameState() == GamePanel.PAUSE_STATE) {
             drawPauseScreen(graphics2D);
