@@ -14,6 +14,8 @@ public class UI {
     private GamePanel gamePanel;
     private Font displayFont;
 
+    Color BlackTransparent50 = new Color(0, 0, 0, 127);
+
     private Graphics2D graphics2D;
     BufferedImage keyImage;
 
@@ -76,6 +78,8 @@ public class UI {
     }
 
     private void drawPauseScreen(Graphics2D graphics2D) {
+        graphics2D.setColor(BlackTransparent50);
+        graphics2D.fillRect(0, 0, ScaleManager.getWorldHeight(), ScaleManager.getWorldWidth());
         String pauseText = "PAUSED!";
         drawStringCenter(pauseText, graphics2D, displayFont, Color.WHITE);
     }
