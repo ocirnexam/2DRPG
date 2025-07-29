@@ -21,7 +21,7 @@ public abstract class NPC extends Entity {
 
     public void update() {
         actionLockCounter++;
-        if (actionLockCounter > 50) {
+        if (actionLockCounter > 100) {
             actionLockCounter = 0;
         }
     }
