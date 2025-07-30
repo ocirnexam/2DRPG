@@ -63,9 +63,6 @@ public class NPC_TownOldest extends NPC {
     @Override
     public void update() {
         super.update();
-        if(getActionLockCounter() == NPC.ACTION_UNLOCKED) {
-            setAction();
-        }
         collisionOn = false;
         gamePanel.getCollisionManager().checkCollisionWithSolidTiles(this);
         if (!collisionOn && !isStanding) {
