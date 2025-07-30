@@ -24,6 +24,9 @@ public abstract class NPC extends Entity {
         if (actionLockCounter > 100) {
             actionLockCounter = 0;
         }
+        if(getActionLockCounter() == NPC.ACTION_UNLOCKED) {
+            setAction();
+        }
     }
 
     protected abstract void setAction();
