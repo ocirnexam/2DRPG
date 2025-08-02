@@ -61,6 +61,7 @@ public class GamePanel extends JPanel implements Runnable {
         themeSoundManager.loop();
     }
 
+    @SuppressWarnings("unused")
     private void stopMusic() {
         themeSoundManager.stop();
     }
