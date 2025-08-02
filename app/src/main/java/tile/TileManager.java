@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import javax.imageio.ImageIO;
 
 import main.ScaleManager;
+import math.Vec2D;
 import main.GamePanel;
 
 public class TileManager {
@@ -28,7 +29,7 @@ public class TileManager {
     private void setupTile(int index, String imageName, boolean collision) {
         try {
             BufferedImage originalImage = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName + ".png"));
-            tiles[index] = new Tile(ScaleManager.scaleImage(originalImage, ScaleManager.getTileSize(), ScaleManager.getTileSize()), collision);
+            tiles[index] = new Tile(ScaleManager.scaleImage(originalImage, new Vec2D(ScaleManager.getTileSize(), ScaleManager.getTileSize())), collision);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -111,14 +112,23 @@ public class TileManager {
         return tiles;
     }
 
+    private boolean isInView(Vec2D worldCoordinates) {
+        return (worldCoordinates.getX() + ScaleManager.getTileSize() > gamePanel.player.getWorldX() - gamePanel.player.getScreenX() &&
+                worldCoordinates.getX() - ScaleManager.getTileSize() < gamePanel.player.getWorldX() + gamePanel.player.getScreenX() &&
+                worldCoordinates.getY() + ScaleManager.getTileSize() > gamePanel.player.getWorldY() - gamePanel.player.getScreenY() &&
+                worldCoordinates.getY() - ScaleManager.getTileSize() < gamePanel.player.getWorldY() + gamePanel.player.getScreenY());
+    }
+
     public void draw(Graphics2D graphics2D) {
         for (int col = 0; col < ScaleManager.getMaxWorldColumns(); col++) {
             for (int row = 0; row < ScaleManager.getMaxWorldRows(); row++) {
-                int worldX = col * ScaleManager.getTileSize();
-                int worldY = row * ScaleManager.getTileSize();
-                int screenX = worldX - gamePanel.player.getWorldX() + gamePanel.player.screenX;
-                int screenY = worldY - gamePanel.player.getWorldY() + gamePanel.player.screenY;
-                graphics2D.drawImage(tiles[mapTileNum[col][row]].getImage(), screenX, screenY, null);
+                Vec2D worldCoordinates = new Vec2D(col * ScaleManager.getTileSize(), 
+                                                   row * ScaleManager.getTileSize());
+                if (isInView(worldCoordinates)) {
+                    Vec2D screenCoordinates = new Vec2D(worldCoordinates.getX() - gamePanel.player.getWorldX() + gamePanel.player.getScreenX(), 
+                                                        worldCoordinates.getY() - gamePanel.player.getWorldY() + gamePanel.player.getScreenY());
+                    graphics2D.drawImage(tiles[mapTileNum[col][row]].getImage(), screenCoordinates.getX(), screenCoordinates.getY(), null);
+                }
             }
         }
     }

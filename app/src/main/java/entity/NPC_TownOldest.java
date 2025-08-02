@@ -6,6 +6,7 @@ import java.util.Random;
 
 import main.GamePanel;
 import main.ScaleManager;
+import math.Vec2D;
 
 public class NPC_TownOldest extends NPC {
 
@@ -34,13 +35,6 @@ public class NPC_TownOldest extends NPC {
         setupEntityImage(7, "/npc/TownOldest_Left2");
         setupEntityImage(8, "/npc/TownOldest_Front_Standing");
         setupEntityImage(9, "/npc/TownOldest_Back_Standing");
-    }
-
-    public boolean isInView() {
-        return (this.getWorldX() + ScaleManager.getTileSize() > gamePanel.player.getWorldX() - gamePanel.player.screenX &&
-                this.getWorldX() - ScaleManager.getTileSize() < gamePanel.player.getWorldX() + gamePanel.player.screenX &&
-                this.getWorldY() + ScaleManager.getTileSize() > gamePanel.player.getWorldY() - gamePanel.player.screenY &&
-                this.getWorldY() - ScaleManager.getTileSize() < gamePanel.player.getWorldY() + gamePanel.player.screenY);
     }
 
     protected void setAction() {
@@ -86,18 +80,17 @@ public class NPC_TownOldest extends NPC {
 
     @Override
     public void draw(Graphics2D graphics2D) {
-        int screenX = worldX - gamePanel.player.getWorldX() + gamePanel.player.screenX;
-        int screenY = worldY - gamePanel.player.getWorldY() + gamePanel.player.screenY;
-        BufferedImage image;
-
-        if (spriteNum < 8) {
-            image = images[direction + spriteNum];
-        } else {
-            image = images[spriteNum];
-        }
-
         if (isInView()) {
-            graphics2D.drawImage(image, screenX, screenY, null);
+            Vec2D screenCoordinates = new Vec2D(getWorldX() - gamePanel.player.getWorldX() + gamePanel.player.getScreenX(),
+                                                getWorldY() - gamePanel.player.getWorldY() + gamePanel.player.getScreenY());
+            BufferedImage image;
+
+            if (spriteNum < 8) {
+                image = images[direction + spriteNum];
+            } else {
+                image = images[spriteNum];
+            }
+            graphics2D.drawImage(image, screenCoordinates.getX(), screenCoordinates.getY(), null);
         }
     }
 }

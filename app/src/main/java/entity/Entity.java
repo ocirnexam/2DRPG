@@ -9,10 +9,11 @@ import javax.imageio.ImageIO;
 
 import main.GamePanel;
 import main.ScaleManager;
+import math.Vec2D;
 
 public abstract class Entity {
 
-    protected int worldX, worldY;
+    protected Vec2D worldCoordinates = new Vec2D();
     protected int speed;
 
     protected GamePanel gamePanel;
@@ -56,11 +57,11 @@ public abstract class Entity {
     }
 
     public void setWorldX(int x) {
-        this.worldX = x;
+        this.worldCoordinates.setX(x);
     }
 
     public void setWorldY(int y) {
-        this.worldY = y;
+        this.worldCoordinates.setY(y);
     }
 
     public void setSpeed(int speed)
@@ -69,11 +70,11 @@ public abstract class Entity {
     }
 
     public int getWorldX() {
-        return this.worldX;
+        return this.worldCoordinates.getX();
     }
 
     public int getWorldY() {
-        return this.worldY;
+        return this.worldCoordinates.getY();
     }
 
     public int getSpeed() {

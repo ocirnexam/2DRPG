@@ -3,27 +3,25 @@ package main;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import math.Vec2D;
+
 public class ScaleManager {
     // SCREEN SETTINGS
     private static final int originalTileSize = 16; // 16x16 P Tile
     private static int scale = 4; // scale to higher resolution screens
 
     private static int tileSize = originalTileSize * scale;
-    private static final int maxScreenCol = 16;
-    private static final int maxScreenRow = 12;
-    private static final int screenWidth = tileSize * maxScreenCol;
-    private static final int screenHeight = tileSize * maxScreenRow;
+    private static final Vec2D maxScreenTiles = new Vec2D(16, 12);
+    private static final Vec2D screenResolution = new Vec2D(tileSize * maxScreenTiles.getX(), tileSize * maxScreenTiles.getY());
 
     // World Settings
-    private static final int maxWorldCol = 105;
-    private static final int maxWorldRow = 66;
-    private static final int worldWidth = tileSize * maxWorldCol;
-    private static final int worldHeight = tileSize * maxWorldRow;
+    private static final Vec2D maxWorldTiles = new Vec2D(105, 66);
+    private static final Vec2D worldResolution = new Vec2D(tileSize * maxWorldTiles.getX(), tileSize * maxWorldTiles.getY());
 
-    public static BufferedImage scaleImage(BufferedImage image, int width, int height) {
-        BufferedImage scaledImage = new BufferedImage(width, height, image.getType());
+    public static BufferedImage scaleImage(BufferedImage image, Vec2D size) {
+        BufferedImage scaledImage = new BufferedImage(size.getX(), size.getY(), image.getType());
         Graphics2D scaledImageGraphics2D = scaledImage.createGraphics();
-        scaledImageGraphics2D.drawImage(image, 0, 0, width, height, null);
+        scaledImageGraphics2D.drawImage(image, 0, 0, size.getX(), size.getY(), null);
         scaledImageGraphics2D.dispose();
         return scaledImage;
     }
@@ -33,25 +31,25 @@ public class ScaleManager {
     }
 
     public static int getMaxWorldColumns() {
-        return maxWorldCol;
+        return maxWorldTiles.getX();
     }
     public static int getMaxWorldRows() {
-        return maxWorldRow;
+        return maxWorldTiles.getY();
     }
 
     public static int getWorldWidth() {
-        return worldWidth;
+        return worldResolution.getX();
     }
 
     public static int getWorldHeight() {
-        return worldHeight;
+        return worldResolution.getY();
     }
 
     public static int getScreenWidth() {
-        return screenWidth;
+        return screenResolution.getX();
     }
 
     public static int getScreenHeight() {
-        return screenHeight;
+        return screenResolution.getY();
     }
 }

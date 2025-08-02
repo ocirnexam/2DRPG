@@ -8,21 +8,21 @@ import main.GamePanel;
 import main.InteractiveObjectManager;
 import main.KeyboardManager;
 import main.SoundManager;
+import math.Vec2D;
 import main.ScaleManager;
 
 public class Player extends Entity {
     KeyboardManager keyboardManager;
     int storedKeys = 0;
 
-    public final int screenX;
-    public final int screenY;
+    public final Vec2D screenCoordinates = new Vec2D();
 
     public Player (GamePanel gamePanel, KeyboardManager keyboardManager) {
         super(gamePanel);
         this.keyboardManager = keyboardManager;
 
-        screenX = ScaleManager.getScreenWidth() / 2 - (ScaleManager.getTileSize() / 2);
-        screenY = ScaleManager.getScreenHeight() / 2 - (ScaleManager.getTileSize() / 2);
+        screenCoordinates.setX(ScaleManager.getScreenWidth() / 2 - (ScaleManager.getTileSize() / 2));
+        screenCoordinates.setY(ScaleManager.getScreenHeight() / 2 - (ScaleManager.getTileSize() / 2));
     }
 
     @Override
@@ -46,6 +46,14 @@ public class Player extends Entity {
         setupEntityImage(7, "/player/Character_Left2");
         setupEntityImage(8, "/player/Character_Front_Standing");
         setupEntityImage(9, "/player/Character_Back_Standing");
+    }
+
+    public int getScreenX() {
+        return screenCoordinates.getX();
+    }
+
+    public int getScreenY() {
+        return screenCoordinates.getY();
     }
 
     @Override
@@ -149,7 +157,7 @@ public class Player extends Entity {
             image = images[spriteNum];
         }
 
-        graphics2D.drawImage(image, screenX, screenY, null);
+        graphics2D.drawImage(image, screenCoordinates.getX(), screenCoordinates.getY(), null);
     }
 
     @Override

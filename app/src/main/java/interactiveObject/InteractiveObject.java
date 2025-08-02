@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 
 import main.GamePanel;
 import main.ScaleManager;
-
+import math.Vec2D;
 import entity.Player;
 
 public class InteractiveObject {
@@ -16,8 +16,7 @@ public class InteractiveObject {
     private BufferedImage image;
     private String name;
     private boolean collision;
-    private int worldX = 0;
-    private int worldY = 0;
+    private Vec2D worldCoordinates = new Vec2D();
     protected final Rectangle solidArea = new Rectangle(0, 0, 48, 48);
 
     public InteractiveObject(GamePanel gamePanel) {
@@ -49,11 +48,11 @@ public class InteractiveObject {
     }
 
     public int getWorldX() {
-        return worldX;
+        return worldCoordinates.getX();
     }
 
     public int getWorldY() {
-        return worldY;
+        return worldCoordinates.getY();
     }
 
     public Rectangle getBoundaries() {
@@ -61,8 +60,8 @@ public class InteractiveObject {
     }
 
     public void setBoundaries() {
-        this.solidArea.x = this.worldX;
-        this.solidArea.y = this.worldY;
+        this.solidArea.x = this.getWorldX();
+        this.solidArea.y = this.getWorldY();
     }
 
     public void setImage(BufferedImage image) {
@@ -79,18 +78,28 @@ public class InteractiveObject {
     }
 
     public void setWorldX(int worldX) {
-        this.solidArea.x = this.worldX;
-        this.worldX = worldX;
+        System.out.println("WorldX: " + worldX / ScaleManager.getTileSize());
+        this.worldCoordinates.setX(worldX);
+        this.solidArea.x = this.worldCoordinates.getX();
     }
 
     public void setWorldY(int worldY) {
-        this.solidArea.y = this.worldY;
-        this.worldY = worldY;
+        System.out.println("WorldY: " + worldY / ScaleManager.getTileSize());
+        this.worldCoordinates.setY(worldY);
+        this.solidArea.y = this.worldCoordinates.getY();
+    }
+
+    public boolean isInView() {
+        return (this.getWorldX() + ScaleManager.getTileSize() > gamePanel.player.getWorldX() - gamePanel.player.getScreenX() &&
+                this.getWorldX() - ScaleManager.getTileSize() < gamePanel.player.getWorldX() + gamePanel.player.getScreenX() &&
+                this.getWorldY() + ScaleManager.getTileSize() > gamePanel.player.getWorldY() - gamePanel.player.getScreenY() &&
+                this.getWorldY() - ScaleManager.getTileSize() < gamePanel.player.getWorldY() + gamePanel.player.getScreenY());
     }
     
     public void draw(Graphics2D graphics2D, Player player) {
-        int screenX = worldX - player.getWorldX() + player.screenX;
-        int screenY = worldY - player.getWorldY() + player.screenY;
-        graphics2D.drawImage(getImage(), screenX, screenY, null);
+        if (isInView()) {
+            Vec2D screenCoordinates = new Vec2D(getWorldX() - player.getWorldX() + player.getScreenX(), getWorldY() - player.getWorldY() + player.getScreenY());
+            graphics2D.drawImage(getImage(), screenCoordinates.getX(), screenCoordinates.getY(), null);
+        }
     }
 }
