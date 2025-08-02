@@ -3,6 +3,7 @@ package main;
 import java.awt.Rectangle;
 
 import entity.Entity;
+import entity.NPC;
 import entity.Player;
 import interactiveObject.InteractiveObject;
 import tile.TileManager;
@@ -109,5 +110,52 @@ public class CollisionManager {
             }
         }
         return indexOfCollidingObject;
+    }
+
+    public int checkCollisionwithEntity(Entity entity) {
+        int indexOfCollidingNPC = -1;
+        Entity[] npcs = gamePanel.getNPCManager().getNPCArray();
+        boolean isPlayer = entity.getClass().equals(Player.class);
+
+        for (int i = 0; i < NPCManager.MAX_SIZE; i++) {
+
+            if (npcs[i] == null) {
+                continue;
+            }
+
+            Rectangle npcSolidAreaWorld = (Rectangle) npcs[i].solidArea.clone();
+            npcSolidAreaWorld.y += npcs[i].getWorldY() - 1 * ScaleManager.getTileSize();
+            npcSolidAreaWorld.x += npcs[i].getWorldX() - 1 * ScaleManager.getTileSize();
+            npcSolidAreaWorld.width = 2 * ScaleManager.getTileSize();
+            npcSolidAreaWorld.height = 2 * ScaleManager.getTileSize();
+            Rectangle entitySolidAreaWorld = (Rectangle) entity.solidArea.clone();
+            entitySolidAreaWorld.y += entity.getWorldY();
+            entitySolidAreaWorld.x += entity.getWorldX();
+
+            switch (entity.getDirection()) {
+                case Entity.UP:
+                    entitySolidAreaWorld.y -= entity.getSpeed();
+                case Entity.DOWN:
+                    entitySolidAreaWorld.y += entity.getSpeed();
+                    break;
+                case Entity.LEFT:
+                    entitySolidAreaWorld.x -= entity.getSpeed();
+                    break;
+                case Entity.RIGHT:
+                    entitySolidAreaWorld.x += entity.getSpeed();
+                    break;
+            
+                default:
+                    break;
+            }
+
+            // continue with next object if this one is not intersecting with the entity
+            if (!entitySolidAreaWorld.intersects(npcSolidAreaWorld)) {
+                continue;
+            }
+
+            indexOfCollidingNPC = i;
+        }
+        return indexOfCollidingNPC;
     }
 }

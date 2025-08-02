@@ -19,7 +19,18 @@ public class NPC_TownOldest extends NPC {
         setWorldX(47 * ScaleManager.getTileSize());
         setWorldY(54 * ScaleManager.getTileSize());
         setSpeed(1);
+        
+        dialogues = new String[4];
+        maxDialogueIndex = 4;
         direction = DOWN;
+    }
+
+    @Override
+    protected void setDialogues() {
+        dialogues[0] = "Hello young man.\nFirst time I see you around here.\nNature is great out here, right?";
+        dialogues[1] = "You are probably here because of the story\nabout the treasure in the mines.";
+        dialogues[2] = "I will give you this map,\nso you will not get lost on your trip.";
+        dialogues[3] = "But remember, the treasure is only material,\nthe journey finding it is the real treasure,\nso enjoy it.";
     }
 
     @Override

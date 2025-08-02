@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyboardManager implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, pausePressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, pausePressed, eKeyPressed, enterKeyPressed;
 
     public boolean isAnyMoveKeyPressed() {
         return upPressed || downPressed || leftPressed || rightPressed;
@@ -13,7 +13,6 @@ public class KeyboardManager implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        
     }
 
     @Override
@@ -31,7 +30,9 @@ public class KeyboardManager implements KeyListener {
         else if (code == KeyEvent.VK_D) {
             this.rightPressed = true;
         }
-        else if (code == KeyEvent.VK_ESCAPE) {
+        else if (code == KeyEvent.VK_E) {
+            this.eKeyPressed = true;
+        } else if (code == KeyEvent.VK_ESCAPE) {
             this.pausePressed = !this.pausePressed;
         }
     }
@@ -50,6 +51,11 @@ public class KeyboardManager implements KeyListener {
         }
         else if (code == KeyEvent.VK_D) {
             this.rightPressed = false;
+        }
+        else if (code == KeyEvent.VK_E) {
+            this.eKeyPressed = false;
+        } else if (code == KeyEvent.VK_ENTER) {
+            this.enterKeyPressed = true;
         }
     }
     

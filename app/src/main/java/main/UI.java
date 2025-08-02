@@ -1,14 +1,19 @@
 package main;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
 import main.ScaleManager;
+import math.Vec2D;
 
 public class UI {
     private GamePanel gamePanel;
@@ -16,20 +21,30 @@ public class UI {
 
     Color BlackTransparent50 = new Color(0, 0, 0, 127);
 
-    private Graphics2D graphics2D;
     BufferedImage keyImage;
 
     private boolean messageOn = false;
     private int messageCounter = 0;
     private String message = "";
-    private boolean gameFinished = false;
-
-    private double playDuration = 0;
+    private boolean setPossibleInteratcionWithNPC;
+    private String currentDialogue;
 
     public UI(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        displayFont = new Font("Arial", Font.PLAIN, 30);
+        loadFont();
         loadImages();
+    }
+
+    private void loadFont() {
+        InputStream inputStream = getClass().getResourceAsStream("/font/fs-pixel-sans.ttf");
+        try {
+            displayFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+            displayFont = displayFont.deriveFont(55f);
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadImages() {
@@ -41,13 +56,16 @@ public class UI {
         
     }
 
+    public void setPossibleInteratcionWithNPC(boolean flag) {
+        setPossibleInteratcionWithNPC = flag;
+    }
+    public void setCurrentDialogue(String dialogue) {
+        this.currentDialogue = dialogue;
+    }
+
     public void showMessage(String message) {
         this.message = message;
         this.messageOn = true;
-    }
-
-    public void setGameFinished() {
-        this.gameFinished = true;
     }
 
     public void draw(Graphics2D graphics2D) {
@@ -71,9 +89,45 @@ public class UI {
                     this.messageOn = false;
                 }
             }
+
+            if (setPossibleInteratcionWithNPC == true) {
+                graphics2D.setColor(Color.BLACK);
+                graphics2D.fillRoundRect(ScaleManager.getTileSize()* 2 - 20, ScaleManager.getTileSize() * 2 - 20, 300, ScaleManager.getTileSize(), 40, 40);
+                graphics2D.setColor(Color.WHITE);
+                graphics2D.drawRoundRect(ScaleManager.getTileSize()* 2 - 20, ScaleManager.getTileSize() * 2 - 20, 300, ScaleManager.getTileSize(), 40, 40);
+                graphics2D.drawString("Interact with E", ScaleManager.getTileSize()* 2, ScaleManager.getTileSize() * 2 + 20);
+            }
         }
         else if (gamePanel.getGameState() == GamePanel.PAUSE_STATE) {
             drawPauseScreen(graphics2D);
+        }
+        else if (gamePanel.getGameState() == GamePanel.DIALOG_STATE) {
+            drawDialogScreen(graphics2D);
+        }
+    }
+
+    private void drawDialogScreen(Graphics2D graphics2D) {
+        if (currentDialogue == null) {
+            gamePanel.setGameState(GamePanel.PLAY_STATE);
+            return;
+        }
+        Rectangle windowRectangle = new Rectangle(ScaleManager.getTileSize() * 2, 
+                                                  ScaleManager.getTileSize() / 2, 
+                                                  ScaleManager.getScreenWidth() - (ScaleManager.getTileSize() * 4), 
+                                                  ScaleManager.getTileSize() * 4);
+        
+        graphics2D.setColor(new Color(0, 0, 0, 200));
+        graphics2D.fillRoundRect(windowRectangle.x, windowRectangle.y, windowRectangle.width, windowRectangle.height, 35, 35);
+        graphics2D.setStroke(new BasicStroke(5));
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.drawRoundRect(windowRectangle.x + 10, windowRectangle.y + 10, windowRectangle.width - 20, windowRectangle.height - 20, 35, 35);
+    
+        Vec2D textCoordinates = new Vec2D(windowRectangle.x + ScaleManager.getTileSize(), windowRectangle.y + ScaleManager.getTileSize());
+        graphics2D.setFont(displayFont);
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 40));
+        for (String line : currentDialogue.split("\n")) {
+            graphics2D.drawString(line, textCoordinates.getX(), textCoordinates.getY());
+            textCoordinates.setY(textCoordinates.getY() + 40);
         }
     }
 

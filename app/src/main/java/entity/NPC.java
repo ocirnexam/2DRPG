@@ -14,8 +14,14 @@ public abstract class NPC extends Entity {
 
     private static final int ACTION_CHANGE_DELAY = 180; // 180 ticks = 3 secs
 
+    private int currentDialogIndex = 0;
+
+    protected String[] dialogues;
+    protected int maxDialogueIndex;
+
     protected NPC(GamePanel gamePanel) {
         super(gamePanel);
+        setDialogues();
     }
 
     protected int getActionLockCounter() {
@@ -27,6 +33,20 @@ public abstract class NPC extends Entity {
                 this.getWorldX() - ScaleManager.getTileSize() < gamePanel.player.getWorldX() + gamePanel.player.getScreenX() &&
                 this.getWorldY() + ScaleManager.getTileSize() > gamePanel.player.getWorldY() - gamePanel.player.getScreenY() &&
                 this.getWorldY() - ScaleManager.getTileSize() < gamePanel.player.getWorldY() + gamePanel.player.getScreenY());
+    }
+
+    public String getCurrentDialog() {
+        if (currentDialogIndex >= dialogues.length) {
+            currentDialogIndex = 0;
+            return null;
+        }
+        String dialog = dialogues[currentDialogIndex];
+        currentDialogIndex++;
+        return dialog;
+    }
+
+    public void speak() {
+        gamePanel.getUIManager().setCurrentDialogue(getCurrentDialog());
     }
 
     public void update() {
@@ -44,9 +64,17 @@ public abstract class NPC extends Entity {
             direction %= MAX_DIRECTIONS;
             collisionOn = false;
             gamePanel.getCollisionManager().checkCollisionWithSolidTiles(this);
-
+        }
+        gamePanel.getCollisionManager().checkCollisionWithInteractiveObject(this);
+        while (collisionOn == true) {
+            direction += NEXT_DIRECTION;
+            direction %= MAX_DIRECTIONS;
+            collisionOn = false;
+            gamePanel.getCollisionManager().checkCollisionWithInteractiveObject(this);
         }
     }
+    
+    protected abstract void setDialogues();
 
     protected abstract void setAction();
     

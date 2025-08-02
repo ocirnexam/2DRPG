@@ -8,7 +8,9 @@ import entity.NPC_TownOldest;
 public class NPCManager {
     private GamePanel gamePanel;
 
-    private final Entity npc[] = new Entity[10];
+    public static final int MAX_SIZE = 10;
+
+    private final Entity npc[] = new Entity[MAX_SIZE];
 
     public NPCManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -18,8 +20,12 @@ public class NPCManager {
         npc[0] = new NPC_TownOldest(gamePanel);
     }
 
+    public Entity[] getNPCArray() {
+        return this.npc;
+    }
+
     public void update() {
-        for (int i = 0; i < npc.length; i++) {
+        for (int i = 0; i < MAX_SIZE; i++) {
             if(npc[i] != null) {
                 npc[i].update();
             }
@@ -27,7 +33,7 @@ public class NPCManager {
     }
 
     public void draw(Graphics2D graphics2D) {
-        for (int i = 0; i < npc.length; i++) {
+        for (int i = 0; i < MAX_SIZE; i++) {
             if(npc[i] != null) {
                 npc[i].draw(graphics2D);
             }

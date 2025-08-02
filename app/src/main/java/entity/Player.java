@@ -106,6 +106,14 @@ public class Player extends Entity {
         }
     }
 
+    private void interactWithNPC(int indexOfNPC) {
+        if (indexOfNPC < 0) {
+            return;
+        }
+        gamePanel.setGameState(GamePanel.DIALOG_STATE);
+        ((NPC) gamePanel.getNPCManager().getNPCArray()[indexOfNPC]).speak();
+    }
+
     public boolean hasKey() {
         return storedKeys > 0;
     }
@@ -116,7 +124,8 @@ public class Player extends Entity {
 
     @Override
     public void update() {
-        if (keyboardManager.isAnyMoveKeyPressed()) {
+        int indexOfCollidingNPC;
+        if (keyboardManager.isAnyMoveKeyPressed() && gamePanel.getGameState() == GamePanel.PLAY_STATE) {
             if (keyboardManager.upPressed) {
                 this.move(UP);
             } 
@@ -145,6 +154,17 @@ public class Player extends Entity {
                 spriteNum = 1;
             }
             spriteCounter = 0;
+        }
+
+        // collision with npcs should be independent of movement
+        indexOfCollidingNPC = gamePanel.getCollisionManager().checkCollisionwithEntity(this);
+        if (indexOfCollidingNPC >= 0) {
+            gamePanel.setPossibleInteratcionWithNPC(true);
+            if (keyboardManager.eKeyPressed || gamePanel.getGameState() == GamePanel.DIALOG_STATE) {
+                interactWithNPC(indexOfCollidingNPC);
+            }
+        } else {
+            gamePanel.setPossibleInteratcionWithNPC(false);
         }
     }
 

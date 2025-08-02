@@ -30,6 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
     private int gameState = 0;
     public static final int PLAY_STATE = 1;
     public static final int PAUSE_STATE = 2;
+    public static final int DIALOG_STATE = 3;
 
     private int FPS = 60;
     private int secondInNanoSeconds = 1000000000;
@@ -100,6 +101,14 @@ public class GamePanel extends JPanel implements Runnable {
         return uiManager;
     }
 
+    public NPCManager getNPCManager() {
+        return npcManager;
+    }
+
+    public void setGameState(int gameState) {
+        this.gameState = gameState;
+    }
+
     public int getGameState() {
         return gameState;
     }
@@ -137,6 +146,10 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    public void setPossibleInteratcionWithNPC(boolean flag) {
+        uiManager.setPossibleInteratcionWithNPC(flag);
+    }
+
     private void update() {
         if (gameState == PLAY_STATE) {
             if (keyboardManager.pausePressed) {
@@ -149,6 +162,11 @@ public class GamePanel extends JPanel implements Runnable {
             if (!keyboardManager.pausePressed) {
                 gameState = PLAY_STATE;
                 resumeMusic();
+            }
+        } else if (gameState == DIALOG_STATE) {
+            if (keyboardManager.enterKeyPressed) {
+                player.update();
+                keyboardManager.enterKeyPressed = false;
             }
         }
     }
