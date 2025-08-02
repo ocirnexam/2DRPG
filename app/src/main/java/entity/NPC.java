@@ -11,6 +11,8 @@ public abstract class NPC extends Entity {
     protected static final int NEXT_DIRECTION = 2;
     protected static final int MAX_DIRECTIONS = 9;
 
+    private static final int ACTION_CHANGE_DELAY = 180; // 180 ticks = 3 secs
+
     protected NPC(GamePanel gamePanel) {
         super(gamePanel);
     }
@@ -21,7 +23,7 @@ public abstract class NPC extends Entity {
 
     public void update() {
         actionLockCounter++;
-        if (actionLockCounter > 100) {
+        if (actionLockCounter > ACTION_CHANGE_DELAY) {
             actionLockCounter = 0;
         }
     }
