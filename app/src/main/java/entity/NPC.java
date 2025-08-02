@@ -29,6 +29,15 @@ public abstract class NPC extends Entity {
         if(getActionLockCounter() == NPC.ACTION_UNLOCKED) {
             setAction();
         }
+        collisionOn = false;
+        gamePanel.getCollisionManager().checkCollisionWithSolidTiles(this);
+        while (collisionOn == true) {
+            direction += NEXT_DIRECTION;
+            direction %= MAX_DIRECTIONS;
+            collisionOn = false;
+            gamePanel.getCollisionManager().checkCollisionWithSolidTiles(this);
+
+        }
     }
 
     protected abstract void setAction();

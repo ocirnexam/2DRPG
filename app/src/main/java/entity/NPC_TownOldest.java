@@ -63,15 +63,6 @@ public class NPC_TownOldest extends NPC {
     @Override
     public void update() {
         super.update();
-        collisionOn = false;
-        gamePanel.getCollisionManager().checkCollisionWithSolidTiles(this);
-        while (collisionOn == true) {
-            direction += NEXT_DIRECTION;
-            direction %= MAX_DIRECTIONS;
-            collisionOn = false;
-            gamePanel.getCollisionManager().checkCollisionWithSolidTiles(this);
-
-        }
         if (!collisionOn && !isStanding) {
             move(direction);
             spriteCounter++;
