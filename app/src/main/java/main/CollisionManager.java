@@ -30,6 +30,8 @@ public class CollisionManager {
         int entityBottomRow = (entityWorldRectangle.y + entityWorldRectangle.height) / ScaleManager.getTileSize();
 
         int tileNumber1, tileNumber2; // only 2 tiles can hit while moving in one direction
+        boolean ignoreTile1 = false;
+        boolean ignoreTile2 = false;
 
         TileManager tileManager = gamePanel.getTileManager();
 
@@ -59,7 +61,14 @@ public class CollisionManager {
                 tileNumber2 = -1;
                 break;
         }
-        if (tileNumber1 >= 0 && tileNumber2 >= 0 && (tileManager.getTiles()[tileNumber1].isColliding() || tileManager.getTiles()[tileNumber2].isColliding())) {
+        int[] waterTileIndexes = tileManager.getIntervallOfWaterTileIndexes();
+        if (tileNumber1 >= waterTileIndexes[0] && tileNumber1 <= waterTileIndexes[1] && entity.getClass().equals(Player.class) && ((Player) entity).hasWaterBoots()) {
+            ignoreTile1 = true;
+        }
+        if (tileNumber2 >= waterTileIndexes[0] && tileNumber2 <= waterTileIndexes[1] && entity.getClass().equals(Player.class) && ((Player) entity).hasWaterBoots()) {
+            ignoreTile2 = true;
+        }
+        if (tileNumber1 >= 0 && tileNumber2 >= 0 && ((tileManager.getTiles()[tileNumber1].isColliding() && !ignoreTile1) || (tileManager.getTiles()[tileNumber2].isColliding() && !ignoreTile2))) {
             entity.collisionOn = true;
         } 
     }

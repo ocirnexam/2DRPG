@@ -38,10 +38,10 @@ public class NPC_TownOldest extends NPC {
         images = new BufferedImage[10];
         setupEntityImage(0, "/npc/TownOldest_Front1");
         setupEntityImage(1, "/npc/TownOldest_Front2");
-        setupEntityImage(2, "/npc/TownOldest_Back1");
-        setupEntityImage(3, "/npc/TownOldest_Back2");
-        setupEntityImage(4, "/npc/TownOldest_Right1");
-        setupEntityImage(5, "/npc/TownOldest_Right2");
+        setupEntityImage(2, "/npc/TownOldest_Right1");
+        setupEntityImage(3, "/npc/TownOldest_Right2");
+        setupEntityImage(4, "/npc/TownOldest_Back1");
+        setupEntityImage(5, "/npc/TownOldest_Back2");
         setupEntityImage(6, "/npc/TownOldest_Left1");
         setupEntityImage(7, "/npc/TownOldest_Left2");
         setupEntityImage(8, "/npc/TownOldest_Front_Standing");

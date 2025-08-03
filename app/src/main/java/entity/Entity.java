@@ -30,8 +30,8 @@ public abstract class Entity {
     public boolean collisionOn = false;
 
     public static final int DOWN = 0;
-    public static final int UP = 2; 
-    public static final int RIGHT = 4;
+    public static final int RIGHT = 2;
+    public static final int UP = 4; 
     public static final int LEFT = 6;
 
     protected int direction;

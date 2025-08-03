@@ -3,17 +3,21 @@ package main;
 import java.awt.Graphics2D;
 
 import interactiveObject.OpenDoor;
+import interactiveObject.WaterBoots;
 import interactiveObject.Chest;
 import interactiveObject.Door;
 import interactiveObject.InteractiveObject;
 import interactiveObject.Key;
 
 import main.ScaleManager;
+import math.Vec2D;
 
 public class InteractiveObjectManager {
     private GamePanel gamePanel;
 
-    public static final int MAX_SIZE = 10;
+    public static final int MAX_SIZE = 20;
+
+    private int nextObjectIndex = 0;
 
     // Interactive Objects
     public InteractiveObject interactiveObjects[] = new InteractiveObject[MAX_SIZE];
@@ -24,6 +28,13 @@ public class InteractiveObjectManager {
 
     public InteractiveObject[] getInteractiveObjects() {
         return interactiveObjects;
+    }
+
+    public void spawnObject(InteractiveObject object, Vec2D position) {
+        interactiveObjects[nextObjectIndex] = object;
+        interactiveObjects[nextObjectIndex].setWorldX(position.getX());
+        interactiveObjects[nextObjectIndex].setWorldY(position.getY());
+        interactiveObjects[nextObjectIndex].setBoundaries();
     }
 
     public void placeInteractiveObjects() {
@@ -66,6 +77,8 @@ public class InteractiveObjectManager {
         interactiveObjects[7].setWorldX(18 * ScaleManager.getTileSize());
         interactiveObjects[7].setWorldY(59 * ScaleManager.getTileSize());
         interactiveObjects[7].setBoundaries();
+
+        nextObjectIndex = 8;
     }
 
     public void removeObject(int index) {
@@ -95,6 +108,14 @@ public class InteractiveObjectManager {
                 this.interactiveObjects[index] = new OpenDoor(gamePanel);
                 this.interactiveObjects[index].setWorldX(worldX);
                 this.interactiveObjects[index].setWorldY(worldY);
+                break;
+            case "chest":
+                if (index == 5) {
+                        spawnObject(new WaterBoots(this.gamePanel), new Vec2D(interactiveObject.getWorldX() + ScaleManager.getTileSize(), interactiveObject.getWorldY() + ScaleManager.getTileSize()));
+                }
+                break;
+            case "waterboots":
+                removeObject(index);
                 break;
         }
     }

@@ -17,6 +17,7 @@ public class TileManager {
     private GamePanel gamePanel;
     Tile[] tiles;
     int mapTileNum[][];
+    int[] waterIndexes = new int[2];
 
     public TileManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -38,12 +39,12 @@ public class TileManager {
     private void getTileImages() {
         setupTile(0, "GrassLand", false);
         setupTile(1, "Sand", false);
-        setupTile(2, "Water", true);
+        setupTile(2, "SandBase", false);
         setupTile(3, "Wall", true);
         setupTile(4, "Wood", false);
         setupTile(5, "Forest", true);
         setupTile(6, "GrassLandBase", false);
-        setupTile(7, "SandBase", false);
+        setupTile(7, "Water", true);
         setupTile(8, "WaterBase", true);
         setupTile(10, "GrassToWaterTop", true);
         setupTile(11, "GrassToWaterTopLeftCorner", true);
@@ -75,6 +76,10 @@ public class TileManager {
         setupTile(37, "GrassToSandCornerBottomRightOut", false);
         setupTile(38, "WallVertical", true);
         setupTile(39, "WallHorizontal", true);
+
+        // indexes of water tiles
+        waterIndexes[0] = 7;
+        waterIndexes[1] = 25;
     }
 
     public void loadMap(String mapFileName) {
@@ -102,6 +107,11 @@ public class TileManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public int[] getIntervallOfWaterTileIndexes() {
+        
+        return waterIndexes;
     }
 
     public int[][] getMapTileNum() {

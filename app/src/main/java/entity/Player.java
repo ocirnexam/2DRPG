@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import interactiveObject.InteractiveObject;
+import interactiveObject.WaterBoots;
 import main.GamePanel;
 import main.InteractiveObjectManager;
 import main.KeyboardManager;
@@ -14,6 +15,7 @@ import main.ScaleManager;
 public class Player extends Entity {
     KeyboardManager keyboardManager;
     int storedKeys = 0;
+    boolean hasWaterBoots = false;
 
     public final Vec2D screenCoordinates = new Vec2D();
 
@@ -38,14 +40,18 @@ public class Player extends Entity {
         images = new BufferedImage[10];
         setupEntityImage(0, "/player/Character_Front1");
         setupEntityImage(1, "/player/Character_Front2");
-        setupEntityImage(2, "/player/Character_Back1");
-        setupEntityImage(3, "/player/Character_Back2");
-        setupEntityImage(4, "/player/Character_Right1");
-        setupEntityImage(5, "/player/Character_Right2");
+        setupEntityImage(2, "/player/Character_Right1");
+        setupEntityImage(3, "/player/Character_Right2");
+        setupEntityImage(4, "/player/Character_Back1");
+        setupEntityImage(5, "/player/Character_Back2");
         setupEntityImage(6, "/player/Character_Left1");
         setupEntityImage(7, "/player/Character_Left2");
         setupEntityImage(8, "/player/Character_Front_Standing");
         setupEntityImage(9, "/player/Character_Back_Standing");
+    }
+
+    private void getWaterBootSprites() {
+
     }
 
     public int getScreenX() {
@@ -97,7 +103,14 @@ public class Player extends Entity {
                 }
                 break;
             case "chest":
-                gamePanel.playSoundEffect(SoundManager.GAME_FINISH);
+                executeInteraction = true;
+                break;
+            case "waterboots":
+                hasWaterBoots = true;
+                gamePanel.getUIManager().showMessage("You found Water boots to walk on water!");
+                executeInteraction = true;
+                getWaterBootSprites();
+                break;
             default:
                 break;
         }
@@ -120,6 +133,10 @@ public class Player extends Entity {
 
     public int getKeys() {
         return storedKeys;
+    }
+
+    public boolean hasWaterBoots() {
+        return hasWaterBoots;
     }
 
     @Override

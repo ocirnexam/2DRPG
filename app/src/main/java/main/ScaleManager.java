@@ -15,7 +15,7 @@ public class ScaleManager {
     private static final Vec2D screenResolution = new Vec2D(tileSize * maxScreenTiles.getX(), tileSize * maxScreenTiles.getY());
 
     // World Settings
-    private static final Vec2D maxWorldTiles = new Vec2D(105, 66);
+    private static final Vec2D maxWorldTiles = new Vec2D(105, 69);
     private static final Vec2D worldResolution = new Vec2D(tileSize * maxWorldTiles.getX(), tileSize * maxWorldTiles.getY());
 
     public static BufferedImage scaleImage(BufferedImage image, Vec2D size) {
