@@ -64,8 +64,8 @@ public class InteractiveObjectManager {
         interactiveObjects[4].setBoundaries();
 
         interactiveObjects[5] = new Chest(gamePanel);
-        interactiveObjects[5].setWorldX(60 * ScaleManager.getTileSize());
-        interactiveObjects[5].setWorldY(24 * ScaleManager.getTileSize());
+        interactiveObjects[5].setWorldX(94 * ScaleManager.getTileSize());
+        interactiveObjects[5].setWorldY(29 * ScaleManager.getTileSize());
         interactiveObjects[5].setBoundaries();
 
         interactiveObjects[6] = new Key(gamePanel);
@@ -78,7 +78,32 @@ public class InteractiveObjectManager {
         interactiveObjects[7].setWorldY(59 * ScaleManager.getTileSize());
         interactiveObjects[7].setBoundaries();
 
-        nextObjectIndex = 8;
+        interactiveObjects[8] = new Door(gamePanel);
+        interactiveObjects[8].setWorldY(10 * ScaleManager.getTileSize());
+        interactiveObjects[8].setWorldX(79 * ScaleManager.getTileSize());
+        interactiveObjects[8].setBoundaries();
+
+        interactiveObjects[9] = new Door(gamePanel);
+        interactiveObjects[9].setWorldY(15 * ScaleManager.getTileSize());
+        interactiveObjects[9].setWorldX(86 * ScaleManager.getTileSize());
+        interactiveObjects[9].setBoundaries();
+
+        interactiveObjects[10] = new Door(gamePanel);
+        interactiveObjects[10].setWorldY(33 * ScaleManager.getTileSize());
+        interactiveObjects[10].setWorldX(91 * ScaleManager.getTileSize());
+        interactiveObjects[10].setBoundaries();
+
+        interactiveObjects[11] = new Key(gamePanel);
+        interactiveObjects[11].setWorldY(6 * ScaleManager.getTileSize());
+        interactiveObjects[11].setWorldX(79 * ScaleManager.getTileSize());
+        interactiveObjects[11].setBoundaries();
+
+        interactiveObjects[12] = new Key(gamePanel);
+        interactiveObjects[12].setWorldY(6 * ScaleManager.getTileSize());
+        interactiveObjects[12].setWorldX(80 * ScaleManager.getTileSize());
+        interactiveObjects[12].setBoundaries();
+
+        nextObjectIndex = 13;
     }
 
     public void removeObject(int index) {

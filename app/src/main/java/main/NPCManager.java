@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 import entity.Entity;
 import entity.NPC_TownOldest;
+import entity.NPC_Major;
 
 public class NPCManager {
     private GamePanel gamePanel;
@@ -18,6 +19,7 @@ public class NPCManager {
 
     public void createNPCs() {
         npc[0] = new NPC_TownOldest(gamePanel);
+        npc[1] = new NPC_Major(gamePanel);
     }
 
     public Entity[] getNPCArray() {

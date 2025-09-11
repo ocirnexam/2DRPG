@@ -8,30 +8,31 @@ import main.GamePanel;
 import main.ScaleManager;
 import math.Vec2D;
 
-public class NPC_TownOldest extends NPC {
+public class NPC_Major extends NPC {
 
-    public NPC_TownOldest(GamePanel gamePanel) {
+    public NPC_Major(GamePanel gamePanel) {
         super(gamePanel);
     }
 
     @Override
     protected void setDefaultValues() {
-        setWorldX(47 * ScaleManager.getTileSize());
-        setWorldY(54 * ScaleManager.getTileSize());
-        setSpeed(1);
+        setWorldX(86 * ScaleManager.getTileSize());
+        setWorldY(18 * ScaleManager.getTileSize());
+        setSpeed(2);
         
-        dialogues = new String[5];
-        maxDialogueIndex = 5;
+        dialogues = new String[6];
+        maxDialogueIndex = 6;
         direction = DOWN;
     }
 
     @Override
     protected void setDialogues() {
-        dialogues[0] = "Hello young man.\nFirst time I see you around here.\nNature is great out here, right?";
-        dialogues[1] = "You are probably here because of the story\nabout the treasure in the mines.";
-        dialogues[2] = "You need to go to the\nvillage through the town hall\nand talk to the mayor.\nHe will give you more information.";
-        dialogues[3] = "First you need to find two\nkeys for the town hall.\nI think I saw one somewhere\nnear the lake in the south.";
-        dialogues[4] = "There should be another\none in the forest to the east.\nGood luck!";
+        dialogues[0] = "Hello visitor and welcome to our town!\nI am the mayor.";
+        dialogues[1] = "We have been expecting you.\nThe town oldest told us you would come.";
+        dialogues[2] = "To find the path up the mountains,\nyou need to follow a river to the east.";
+        dialogues[3] = "The river is where you met the town oldest.\n";
+        dialogues[4] = "To cross the river,\nyou will need special boots.\nYou can find them in a\nchest in our town.";
+        dialogues[5] = "Good luck on your journey!";        
     }
 
     @Override
@@ -49,6 +50,7 @@ public class NPC_TownOldest extends NPC {
         setupEntityImage(9, "/npc/TownOldest_Back_Standing");
     }
 
+    @Override
     protected void setAction() {
         Random random = new Random();
         int actionIndex = random.nextInt(1000);
