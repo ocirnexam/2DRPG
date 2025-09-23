@@ -21,7 +21,7 @@ public class TileManager {
 
     public TileManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        tiles = new Tile[40];
+        tiles = new Tile[39];
         mapTileNum = new int[ScaleManager.getMaxWorldColumns()][ScaleManager.getMaxWorldRows()];
         this.getTileImages();
         this.loadMap("/maps/map_0_2.txt");
@@ -74,8 +74,7 @@ public class TileManager {
         setupTile(35, "GrassToSandCornerTopRightOut", false);
         setupTile(36, "GrassToSandCornerBottomLeftOut", false);
         setupTile(37, "GrassToSandCornerBottomRightOut", false);
-        setupTile(38, "WallVertical", true);
-        setupTile(39, "WallHorizontal", true);
+        setupTile(38, "WallFront", true);
 
         // indexes of water tiles
         waterIndexes[0] = 7;
