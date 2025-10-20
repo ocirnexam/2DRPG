@@ -13,8 +13,8 @@ public class Main {
         window.add(gamePanel);
         window.pack();
 
-        gamePanel.gameSetup();
-        gamePanel.startGameThread();
+        // Play pressed
+        gamePanel.createGame();
         
         window.setLocationRelativeTo(null);
         window.setVisible(true);

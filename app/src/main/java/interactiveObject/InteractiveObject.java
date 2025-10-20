@@ -78,13 +78,11 @@ public class InteractiveObject {
     }
 
     public void setWorldX(int worldX) {
-        System.out.println("WorldX: " + worldX / ScaleManager.getTileSize());
         this.worldCoordinates.setX(worldX);
         this.solidArea.x = this.worldCoordinates.getX();
     }
 
     public void setWorldY(int worldY) {
-        System.out.println("WorldY: " + worldY / ScaleManager.getTileSize());
         this.worldCoordinates.setY(worldY);
         this.solidArea.y = this.worldCoordinates.getY();
     }

@@ -27,10 +27,11 @@ public class GamePanel extends JPanel implements Runnable {
     public final Player player = new Player(this, keyboardManager);
 
     // Game state
-    private int gameState = 0;
+    public static final int TITLE_STATE = 0;
     public static final int PLAY_STATE = 1;
     public static final int PAUSE_STATE = 2;
     public static final int DIALOG_STATE = 3;
+    private int gameState = TITLE_STATE;
 
     private int FPS = 60;
     private int secondInNanoSeconds = 1000000000;
@@ -43,12 +44,16 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
 
-    public void startGameThread() {
+    public void createGame() {
+        startGameThread();
+    }
+
+    private void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
     }
 
-    public void gameSetup() {
+    private void gameSetup() {
         interactiveObjectManager.placeInteractiveObjects();
         npcManager.createNPCs();
         playMusic();
@@ -121,7 +126,6 @@ public class GamePanel extends JPanel implements Runnable {
         long lastTime = System.nanoTime();
         long currentTime;
         long timer = 0;
-        int drawCount = 0;
 
         while (gameThread != null) {
             currentTime = System.nanoTime();
@@ -136,11 +140,8 @@ public class GamePanel extends JPanel implements Runnable {
                 // draw screen with updated information
                 this.repaint(); 
                 delta--;
-                drawCount++;
             }
             if (timer >= secondInNanoSeconds) {
-                System.out.println("FPS:" + drawCount + ", " + player);
-                drawCount = 0;
                 timer = 0;
             }
         }
@@ -168,16 +169,25 @@ public class GamePanel extends JPanel implements Runnable {
                 player.update();
                 keyboardManager.enterKeyPressed = false;
             }
+        } else {
+            // check selection in title screen
+            if (keyboardManager.enterKeyPressed) {
+                gameState = PLAY_STATE;
+                gameSetup();
+                keyboardManager.enterKeyPressed = false;
+            }
         }
     }
 
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         Graphics2D graphics2D = (Graphics2D) graphics;
-        tileManager.draw(graphics2D); 
-        interactiveObjectManager.draw(graphics2D);
-        npcManager.draw(graphics2D);
-        player.draw(graphics2D);
+        if (gameState != TITLE_STATE) {
+            tileManager.draw(graphics2D); 
+            interactiveObjectManager.draw(graphics2D);
+            npcManager.draw(graphics2D);
+            player.draw(graphics2D);
+        }
         uiManager.draw(graphics2D);
     }
 }

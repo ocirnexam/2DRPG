@@ -22,12 +22,16 @@ public class UI {
     Color BlackTransparent50 = new Color(0, 0, 0, 127);
 
     BufferedImage keyImage;
+    BufferedImage titleScreenImage;
 
     private boolean messageOn = false;
     private int messageCounter = 0;
     private String message = "";
     private boolean setPossibleInteratcionWithNPC;
     private String currentDialogue;
+
+    // Default value for centering text
+    public static final int DEFAULT = -1;
 
     public UI(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -50,6 +54,7 @@ public class UI {
     private void loadImages() {
         try {
             keyImage = ImageIO.read(getClass().getResourceAsStream("/objects/Key1.png"));
+            titleScreenImage = ImageIO.read(getClass().getResourceAsStream("/titlescreen/titlescreen.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,7 +74,6 @@ public class UI {
     }
 
     public void draw(Graphics2D graphics2D) {
-
         if(gamePanel.getGameState() == GamePanel.PLAY_STATE) {
             graphics2D.setColor(Color.BLACK);
             graphics2D.fillRoundRect(ScaleManager.getTileSize()/2 - 20, ScaleManager.getTileSize()/2 - 20, 130, ScaleManager.getTileSize(), 20, 20);
@@ -104,6 +108,19 @@ public class UI {
         else if (gamePanel.getGameState() == GamePanel.DIALOG_STATE) {
             drawDialogScreen(graphics2D);
         }
+        else if (gamePanel.getGameState() == GamePanel.TITLE_STATE) {
+            drawTitleScreen(graphics2D);
+        }
+    }
+
+    private void drawTitleScreen(Graphics2D graphics2D) {
+        String titleText = "MOUNTAIN VILLAGE";
+        String startText = "PRESS ENTER TO START";
+
+        graphics2D.drawImage(titleScreenImage, 0, 0, ScaleManager.getScreenWidth(), ScaleManager.getScreenHeight(), null);
+        drawStringCenter(titleText, graphics2D, displayFont.deriveFont(Font.BOLD, 100), Color.BLACK, ScaleManager.getScreenHeight() / 2 - (int) (ScaleManager.getTileSize() * 1.4));
+        drawStringCenter(titleText, graphics2D, displayFont.deriveFont(Font.BOLD, 100), Color.WHITE, DEFAULT);
+        drawStringCenter(startText, graphics2D, displayFont.deriveFont(Font.PLAIN, 50), Color.WHITE, ScaleManager.getScreenHeight() / 2);
     }
 
     private void drawDialogScreen(Graphics2D graphics2D) {
@@ -135,10 +152,10 @@ public class UI {
         graphics2D.setColor(BlackTransparent50);
         graphics2D.fillRect(0, 0, ScaleManager.getWorldHeight(), ScaleManager.getWorldWidth());
         String pauseText = "PAUSED!";
-        drawStringCenter(pauseText, graphics2D, displayFont, Color.WHITE);
+        drawStringCenter(pauseText, graphics2D, displayFont, Color.WHITE, DEFAULT);
     }
 
-    private void drawStringCenter(String text, Graphics2D graphics2D, Font font, Color color) {
+    private void drawStringCenter(String text, Graphics2D graphics2D, Font font, Color color, int yCoord) {
         int textLength; 
         int x;
         int y;
@@ -150,7 +167,12 @@ public class UI {
 
 
         x = ScaleManager.getScreenWidth() / 2 - textLength / 2;
-        y = ScaleManager.getScreenHeight() / 2 - (int) (ScaleManager.getTileSize() * 1.5);
+        if (yCoord == DEFAULT) {
+            y = ScaleManager.getScreenHeight() / 2 - (int) (ScaleManager.getTileSize() * 1.5);
+        }
+        else {
+            y = yCoord;
+        }
         
         graphics2D.drawString(text, x, y);
     }
