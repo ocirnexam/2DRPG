@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 import entity.Player;
 import tile.TileManager;
@@ -171,10 +172,30 @@ public class GamePanel extends JPanel implements Runnable {
             }
         } else {
             // check selection in title screen
+            if (keyboardManager.menuUpPressed) {
+                uiManager.decreaseCommandNumber();
+                keyboardManager.menuUpPressed = false;
+            }
+            else if (keyboardManager.menuDownPressed) {
+                uiManager.increaseCommandNumber();
+                keyboardManager.menuDownPressed = false;
+            }
             if (keyboardManager.enterKeyPressed) {
-                gameState = PLAY_STATE;
-                gameSetup();
-                keyboardManager.enterKeyPressed = false;
+                if (uiManager.getCommandNumber() == UI.NEW_GAME_COMMAND) {
+                    // New Game
+                    gameState = PLAY_STATE;
+                    gameSetup();
+                    keyboardManager.enterKeyPressed = false;
+                } else if (uiManager.getCommandNumber() == UI.LOAD_GAME_COMMAND) {
+                    // Load Game
+                    gameState = PLAY_STATE;
+                    gameSetup();
+                    keyboardManager.enterKeyPressed = false;
+                } else if (uiManager.getCommandNumber() == UI.QUIT_COMMAND) {
+                    // Quit Game
+                    System.exit(0);
+
+                }
             }
         }
     }

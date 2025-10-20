@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyboardManager implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, pausePressed, eKeyPressed, enterKeyPressed;
+    public boolean menuUpPressed, menuDownPressed;
 
     public boolean isAnyMoveKeyPressed() {
         return upPressed || downPressed || leftPressed || rightPressed;
@@ -32,8 +33,15 @@ public class KeyboardManager implements KeyListener {
         }
         else if (code == KeyEvent.VK_E) {
             this.eKeyPressed = true;
-        } else if (code == KeyEvent.VK_ESCAPE) {
+        } 
+        else if (code == KeyEvent.VK_ESCAPE) {
             this.pausePressed = !this.pausePressed;
+        }
+        else if (code == KeyEvent.VK_DOWN) {
+            this.menuDownPressed = true;
+        }
+        else if (code == KeyEvent.VK_UP) {
+            this.menuUpPressed = true;
         }
     }
 
@@ -54,7 +62,8 @@ public class KeyboardManager implements KeyListener {
         }
         else if (code == KeyEvent.VK_E) {
             this.eKeyPressed = false;
-        } else if (code == KeyEvent.VK_ENTER) {
+        } 
+        else if (code == KeyEvent.VK_ENTER) {
             this.enterKeyPressed = true;
         }
     }
